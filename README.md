@@ -1,4 +1,4 @@
-# [Oleh Bali Mobile](https://google.com 'Oleh Bali Website') 🎁🌴
+# [Oleh Bali Mobile](https://google.com 'Oleh Bali Website') 📱🎁🌴
 ## Bringing Indonesia’s Best to Bali’s Beaches 🏖️
 <details>
 <summary>👥 Anggota Kelompok B11</summary>
@@ -12,6 +12,8 @@
 
 <details>
 <summary>👀 OlehBali Mobile at a glance..</summary>
+    
+<img width="1383" alt="Screenshot 2024-11-18 at 14 32 51" src="https://github.com/user-attachments/assets/c068b66f-dc1b-48c9-82ef-40c4d02ff3fb">
 
 **OlehBali**: Bringing Indonesia’s Best to Bali’s Beaches
 
@@ -88,7 +90,10 @@ Di setiap product details akan ada section review produk yang akan menampilkan r
 
 </details>
 <details>
-<summary> Alur Pengintegrasian dengan web service</summary>
+<summary> 💻📲 Alur Pengintegrasian dengan web service</summary>
+    
+![Oleh Bali Mobile](https://github.com/user-attachments/assets/8b84643c-a43b-47aa-a201-9933f1799508)
+
 Berikut adalah alur pengintegrasian Django dan Flutter:
 
 1. **Flutter Mengirim Permintaan (Request) ke Django**  
