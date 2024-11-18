@@ -89,4 +89,34 @@ Di setiap product details akan ada section review produk yang akan menampilkan r
 </details>
 <details>
 <summary> Alur Pengintegrasian dengan web service</summary>
+Berikut adalah alur pengintegrasian Django dan Flutter:
+
+1. **Flutter Mengirim Permintaan (Request) ke Django**  
+   Aplikasi Flutter mengirimkan request HTTP ke server Django melalui Internet, menggunakan endpoint API yang telah didefinisikan.
+
+2. **Django Menerima Request**  
+   Server Django menerima request yang dikirimkan Flutter di endpoint yang sesuai.
+
+3. **Django Memproses Request di Views.py**  
+   Logika di **views.py** memproses request tersebut, seperti mengambil, mengubah, atau menyimpan data.
+
+4. **Django Mengakses Database melalui Models.py**  
+   Jika diperlukan, Django menggunakan **models.py** untuk berinteraksi dengan database, baik untuk membaca maupun menyimpan data.
+
+5. **Data Dikonversi oleh Serializers**  
+   Data yang diambil dari database dikonversi ke format yang kompatibel dengan Flutter, seperti JSON atau XML, menggunakan serializer.
+
+6. **Django Mengirimkan Response ke Flutter**  
+   Django mengirimkan response dalam format JSON/XML kembali ke aplikasi Flutter melalui Internet.
+
+7. **Flutter Menerima Response**  
+   Aplikasi Flutter menerima response dari Django dan memprosesnya untuk digunakan di aplikasi.
+
+8. **Flutter Menampilkan Data ke UI**  
+   Data yang diterima oleh Flutter digunakan untuk memperbarui tampilan di antarmuka pengguna (UI).
+
+9. **Komunikasi Berulang Secara Dinamis**  
+   Proses request dan response ini terus berulang setiap kali aplikasi Flutter membutuhkan data baru dari Django atau mengirimkan data ke server Django.
+
+Alur ini memastikan komunikasi yang baik antara backend (Django) dan frontend (Flutter).
 </details>
