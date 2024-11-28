@@ -1,6 +1,6 @@
 import 'package:oleh_bali_mobile/screens/auth/login_seller.dart';
 import 'package:oleh_bali_mobile/screens/auth/register_buyer.dart';
-import 'package:oleh_bali_mobile/screens/menu.dart';
+import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -109,7 +109,6 @@ class _LoginBuyerState extends State<LoginBuyer> {
                         'username': username,
                         'password': password,
                       });
-
                       if (request.loggedIn) {
                         String message = response['message'];
                         String uname = response['username'];
@@ -117,7 +116,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MyHomePage(title: "Login")),
+                                builder: (context) => BuyerHomepage()),
                           );
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()

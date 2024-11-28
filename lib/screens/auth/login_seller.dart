@@ -1,7 +1,8 @@
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
 import 'package:oleh_bali_mobile/screens/auth/register_seller.dart';
-import 'package:oleh_bali_mobile/screens/menu.dart';
+import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:oleh_bali_mobile/screens/main/seller_homepage.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 // TODO: Import halaman RegisterPage jika sudah dibuat
@@ -117,7 +118,7 @@ class _LoginSellerState extends State<LoginSeller> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MyHomePage(title: "Login")),
+                                builder: (context) => SellerHomepage()),
                           );
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
