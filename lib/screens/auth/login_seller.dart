@@ -1,4 +1,5 @@
-import 'package:oleh_bali_mobile/screens/login_seller.dart';
+import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
+import 'package:oleh_bali_mobile/screens/auth/register_seller.dart';
 import 'package:oleh_bali_mobile/screens/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -22,19 +23,19 @@ class LoginApp extends StatelessWidget {
           primarySwatch: Colors.red,
         ).copyWith(secondary: Colors.red[400]),
       ),
-      home: const LoginBuyer(),
+      home: const LoginSeller(),
     );
   }
 }
 
-class LoginBuyer extends StatefulWidget {
-  const LoginBuyer({super.key});
+class LoginSeller extends StatefulWidget {
+  const LoginSeller({super.key});
 
   @override
-  State<LoginBuyer> createState() => _LoginBuyerState();
+  State<LoginSeller> createState() => _LoginSellerState();
 }
 
-class _LoginBuyerState extends State<LoginBuyer> {
+class _LoginSellerState extends State<LoginSeller> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -60,7 +61,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                    'Login Buyer',
+                    'Login Seller',
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
@@ -104,7 +105,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                       // Untuk menyambungkan Android emulator dengan Django pada localhost,
                       // gunakan URL http://10.0.2.2/
                       final response = await request
-                          .login("http://localhost:8000/auth/login/buyer", {
+                          .login("http://localhost:8000/auth/login/seller", {
                         'username': username,
                         'password': password,
                       });
@@ -148,7 +149,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      minimumSize: Size(double.infinity, 50),
+                      minimumSize: const Size(double.infinity, 50),
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
@@ -160,14 +161,28 @@ class _LoginBuyerState extends State<LoginBuyer> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LoginSeller()),
+                            builder: (context) => const LoginBuyer()),
                       );
                     },
-                    child: Text(
-                      'Are you a seller? Sign in here',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16.0,
+                    child:  RichText(
+                      text: const TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Trying to login as Buyer? ',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'Sign in as Buyer',
+                            style: TextStyle(
+                              color: Colors.black, // Change this to your desired color
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -177,7 +192,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MyHomePage(title:"test")),
+                            builder: (context) => const RegisterSeller()),
                       );
                     },
                     child: Text(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oleh_bali_mobile/screens/login_buyer.dart';
-import 'package:oleh_bali_mobile/screens/menu.dart';
+import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
             ).copyWith(secondary: Colors.red[400]),
             useMaterial3: true,
           ),
-          home: LoginBuyer(),
+          home: const LoginBuyer(),
         )
       );
   }
