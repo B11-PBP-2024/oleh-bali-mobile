@@ -1,5 +1,6 @@
-import 'package:oleh_bali_mobile/screens/login_seller.dart';
-import 'package:oleh_bali_mobile/screens/menu.dart';
+import 'package:oleh_bali_mobile/screens/auth/login_seller.dart';
+import 'package:oleh_bali_mobile/screens/auth/register_buyer.dart';
+import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -108,7 +109,6 @@ class _LoginBuyerState extends State<LoginBuyer> {
                         'username': username,
                         'password': password,
                       });
-
                       if (request.loggedIn) {
                         String message = response['message'];
                         String uname = response['username'];
@@ -116,7 +116,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MyHomePage(title: "Login")),
+                                builder: (context) => BuyerHomepage()),
                           );
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
@@ -148,7 +148,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      minimumSize: Size(double.infinity, 50),
+                      minimumSize: const Size(double.infinity, 50),
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
@@ -160,14 +160,28 @@ class _LoginBuyerState extends State<LoginBuyer> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LoginSeller()),
+                            builder: (context) => const LoginSeller()),
                       );
                     },
-                    child: Text(
-                      'Are you a seller? Sign in here',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16.0,
+                    child: RichText(
+                      text: const TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Want to sell your souvenirs? ',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'Sign in as Seller',
+                            style: TextStyle(
+                              color: Colors.black, // Change this to your desired color
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -177,7 +191,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MyHomePage(title:"test")),
+                            builder: (context) => const RegisterBuyer()),
                       );
                     },
                     child: Text(
