@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
 import 'package:oleh_bali_mobile/widgets/main/item_homepage.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -55,6 +56,11 @@ class ItemCard extends StatelessWidget {
                     );
                 }
             }
+          } else if (item.name == "Articles") {
+            Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ShowArticle()),
+                    );
           }
         },
         // Container untuk menyimpan Icon dan Text
