@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/models/article_entry.dart';
-import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -42,9 +41,7 @@ class _EditArticleState extends State<EditArticle> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Article updated successfully')),
       );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const ShowArticle()));
+      Navigator.pop(context, true); // Pass true to indicate success
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to update article')),
@@ -69,12 +66,12 @@ class _EditArticleState extends State<EditArticle> {
               TextFormField(
                 controller: _imageUrlController,
                 decoration: InputDecoration(
-                    hintText: "Image URL",
-                    labelText: "Image URL",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
+                  hintText: "Image URL",
+                  labelText: "Image URL",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter an image URL';
@@ -86,12 +83,12 @@ class _EditArticleState extends State<EditArticle> {
               TextFormField(
                 controller: _titleController,
                 decoration: InputDecoration(
-                    hintText: "Title",
-                    labelText: "Title",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
+                  hintText: "Title",
+                  labelText: "Title",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a title';
@@ -103,12 +100,12 @@ class _EditArticleState extends State<EditArticle> {
               TextFormField(
                 controller: _textController,
                 decoration: InputDecoration(
-                    hintText: "Text",
-                    labelText: "Text",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
+                  hintText: "Text",
+                  labelText: "Text",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
+                ),
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

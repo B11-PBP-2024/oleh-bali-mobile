@@ -5,6 +5,8 @@ import 'package:oleh_bali_mobile/widgets/article/article_card.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
+import 'edit_article.dart';
+
 class ShowArticle extends StatefulWidget {
   const ShowArticle({super.key});
 
@@ -40,6 +42,33 @@ class _ShowArticleState extends State<ShowArticle> {
     });
   }
 
+  Future<void> _navigateToEditArticle(ArticleEntry article) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditArticle(article: article),
+      ),
+    );
+
+    if (result == true) {
+      // Refetch articles if the edit was successful
+      _fetchArticlesFuture = fetchArticles(context.read<CookieRequest>());
+    }
+  }
+  Future<void> _navigateToAddArticle() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ArticleEntryForm(),
+      ),
+    );
+
+    if (result == true) {
+      // Refetch articles if the edit was successful
+      _fetchArticlesFuture = fetchArticles(context.read<CookieRequest>());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -54,12 +83,7 @@ class _ShowArticleState extends State<ShowArticle> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ArticleEntryForm(),
-                  ),
-                );
+                _navigateToAddArticle();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF2463EB),
@@ -131,6 +155,9 @@ class _ShowArticleState extends State<ShowArticle> {
                           setState(() {
                             articles.removeAt(index);
                           });
+                        },
+                        onEdit: () {
+                          _navigateToEditArticle(articles[index]);
                         },
                       );
                     },

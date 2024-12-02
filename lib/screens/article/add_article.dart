@@ -137,9 +137,9 @@ class _ArticleEntryFormState extends State<ArticleEntryForm> {
                                         .showSnackBar(const SnackBar(
                                     content: Text("Your Article has been added."),
                                     ));
-                                    Navigator.pushReplacement(
+                                    Navigator.pop(
                                         context,
-                                        MaterialPageRoute(builder: (context) => const ShowArticle()),
+                                        true,
                                     );
                                 } else {
                                     ScaffoldMessenger.of(context)
