@@ -1,18 +1,21 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/models/article_entry.dart';
-import 'package:oleh_bali_mobile/screens/article/edit_article.dart';
-import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
 class ArticleCard extends StatelessWidget {
   final ArticleEntry article;
   final bool showAllArticles;
-  final VoidCallback onDelete; // Callback for delete action
+  final VoidCallback onDelete;
+  final VoidCallback onEdit;
 
-  const ArticleCard(this.article, this.showAllArticles, {required this.onDelete, super.key});
+  const ArticleCard(
+    this.article,
+    this.showAllArticles, {
+    required this.onDelete,
+    required this.onEdit,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -104,18 +107,11 @@ class ArticleCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      // Implement edit functionality here
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => EditArticle(article: article,)),
-                      );
-                    },
+                    onPressed: onEdit,
                     child: const Text('Edit'),
                   ),
                   TextButton(
                     onPressed: () async {
-                      // Implement delete functionality here
                       final response = await request.get(
                         "http://localhost:8000/article/delete/mobile/${article.id}/",
                       );
@@ -126,7 +122,7 @@ class ArticleCard extends StatelessWidget {
                             content: Text("Article deleted successfully."),
                           ),
                         );
-                        onDelete(); // Call the callback to update the parent widget
+                        onDelete();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
