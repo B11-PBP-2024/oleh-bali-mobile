@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:oleh_bali_mobile/base_buyer.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -22,7 +23,7 @@ class _ArticleEntryFormState extends State<ArticleEntryForm> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    return Scaffold(
+    return BaseBuyer(
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -32,7 +33,8 @@ class _ArticleEntryFormState extends State<ArticleEntryForm> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
-      body: Form(
+      currentIndex: 1,
+      child: Form(
         key: _formKey,
         child: SingleChildScrollView(
           child: Column(
