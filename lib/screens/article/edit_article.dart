@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:oleh_bali_mobile/base_buyer.dart';
 import 'package:oleh_bali_mobile/models/article_entry.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -53,11 +54,12 @@ class _EditArticleState extends State<EditArticle> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
 
-    return Scaffold(
+    return BaseBuyer(
       appBar: AppBar(
         title: const Text('Edit Article'),
       ),
-      body: Padding(
+      currentIndex: 1,
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oleh_bali_mobile/base_buyer.dart';
 import 'package:oleh_bali_mobile/models/article_entry.dart';
 import 'package:oleh_bali_mobile/screens/article/add_article.dart';
 import 'package:oleh_bali_mobile/widgets/article/article_card.dart';
@@ -72,12 +73,13 @@ class _ShowArticleState extends State<ShowArticle> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    return Scaffold(
+    return BaseBuyer(
       appBar: AppBar(
         title: const Text("Articles"),
-      ),
-      backgroundColor: Color(0xFFb91c1b),
-      body: Column(
+      ), 
+      currentIndex: 1,
+      backgroundColor: const Color.fromARGB(255,185,28,27),
+      child: Column(
         children: [
           const SizedBox(height: 10),
           Center(
@@ -167,7 +169,7 @@ class _ShowArticleState extends State<ShowArticle> {
             ),
           ),
         ],
-      ),
-    );
+      ), 
+      );
   }
 }

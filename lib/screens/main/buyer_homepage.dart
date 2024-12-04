@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:oleh_bali_mobile/base_buyer.dart';
+import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/widgets/main/item_card.dart';
 import 'package:oleh_bali_mobile/widgets/main/item_homepage.dart';
 
@@ -16,8 +18,7 @@ class BuyerHomepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      // AppBar adalah bagian atas halaman yang menampilkan judul.
+    return BaseBuyer(
       appBar: AppBar(
         // Judul aplikasi "Mental Health Tracker" dengan teks putih dan tebal.
         title: const Text(
@@ -29,9 +30,9 @@ class BuyerHomepage extends StatelessWidget {
         ),
         // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
         backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
-      // Body halaman dengan padding di sekelilingnya.
-      body: Padding(
+      ), 
+      currentIndex: 0,
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         // Menyusun widget secara vertikal dalam sebuah kolom.
         child: Column(
@@ -80,7 +81,7 @@ class BuyerHomepage extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      )
     );
   }
 }
