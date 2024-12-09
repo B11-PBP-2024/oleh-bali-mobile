@@ -6,13 +6,13 @@ import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-class BaseBuyer extends StatelessWidget {
+class BaseSeller extends StatelessWidget {
   final Widget child;
   final int currentIndex;
   final PreferredSizeWidget appBar;
   final Color? backgroundColor;
 
-  const BaseBuyer({
+  const BaseSeller({
     super.key,
     required this.appBar,
     required this.child,
@@ -34,16 +34,8 @@ class BaseBuyer extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.article),
-            label: 'Articles',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Catalog',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: 'Wishlist',
+            icon: Icon(Icons.card_giftcard),
+            label: 'My Products',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -63,12 +55,16 @@ class BaseBuyer extends StatelessWidget {
           }
           Widget nextPage;
           if (index == 0) {
+            return;
+            // TODO: ISI PAGE YANG SESUAI
             nextPage = BuyerHomepage();
           } else if (index == 1) {
+            return;
             nextPage = const ShowArticle();
           } else if (index == 2) {
+            return;
             nextPage = const ShowCatalog();
-          }else if (index == 5){
+          }else if (index == 3){
             final response = await request.logout(
                 // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                 "http://localhost:8000/auth/logout");
