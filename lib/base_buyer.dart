@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
+import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 
 class BaseBuyer extends StatelessWidget {
@@ -61,7 +62,9 @@ class BaseBuyer extends StatelessWidget {
             nextPage = BuyerHomepage();
           } else if (index == 1) {
             nextPage = const ShowArticle();
-          } else {
+          } else if (index == 2) {
+            nextPage = const ShowCatalog();
+          }else {
             return;
           }
           Navigator.pushReplacement(
