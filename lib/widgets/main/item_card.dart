@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
+import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/widgets/main/item_homepage.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +62,12 @@ class ItemCard extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => const ShowArticle()),
                     );
-          }
+          } else if (item.name == "Catalog") {
+              Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ShowCatalog()),
+                      );
+            }
         },
         // Container untuk menyimpan Icon dan Text
         child: Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
+import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 
 class BaseBuyer extends StatelessWidget {
@@ -63,6 +64,10 @@ class BaseBuyer extends StatelessWidget {
           if(index == 1) {
             Navigator.pushReplacement(context, 
             MaterialPageRoute(builder: (context) => const ShowArticle()));
+          }
+          if(index == 2) {
+            Navigator.pushReplacement(context, 
+            MaterialPageRoute(builder: (context) => const ShowCatalog()));
           }
         },
       ),
