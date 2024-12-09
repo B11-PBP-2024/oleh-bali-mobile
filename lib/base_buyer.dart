@@ -19,9 +19,9 @@ class BaseBuyer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: this.appBar,
+      appBar: appBar,
       body: child,
-      backgroundColor: backgroundColor ?? Theme.of(context).scaffoldBackgroundColor, // Set backgroundColor
+      backgroundColor: backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
@@ -53,17 +53,26 @@ class BaseBuyer extends StatelessWidget {
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
         onTap: (index) {
-          if(index == currentIndex) {
+          if (index == currentIndex) {
             return;
           }
-          if(index == 0) {
-            Navigator.pushReplacement(context, 
-            MaterialPageRoute(builder: (context) => BuyerHomepage()));
+          Widget nextPage;
+          if (index == 0) {
+            nextPage = BuyerHomepage();
+          } else if (index == 1) {
+            nextPage = const ShowArticle();
+          } else {
+            return;
           }
-          if(index == 1) {
-            Navigator.pushReplacement(context, 
-            MaterialPageRoute(builder: (context) => const ShowArticle()));
-          }
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => nextPage,
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return child;
+              },
+            ),
+          );
         },
       ),
     );
