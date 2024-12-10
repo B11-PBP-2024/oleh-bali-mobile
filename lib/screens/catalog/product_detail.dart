@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:oleh_bali_mobile/base_buyer.dart';
 import 'package:oleh_bali_mobile/models/product_entry.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -115,104 +116,149 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    return Scaffold(
+    return BaseBuyer(
       appBar: AppBar(
         title: Text(widget.product.fields.productName),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                widget.product.fields.productImage,
-                width: double.infinity,
-                height: 300,
-                fit: BoxFit.cover,
+      currentIndex: 2,
+       child: Padding(
+        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  widget.product.fields.productImage,
+                  width: double.infinity,
+                  height: 300,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              widget.product.fields.productName,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
+              const SizedBox(height: 10),
+              Text(
+                widget.product.fields.productName,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Container(
+              const SizedBox(height: 10),
+              Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 3.0),
                 decoration: BoxDecoration(
                   color: Colors.transparent, // Background color inside the border
-                  border: Border.all(color: Color.fromARGB(255, 161,44,44,)),
+                  border: Border.all(color: Color.fromARGB(255, 161, 44, 44)),
                   borderRadius: BorderRadius.circular(12.0), // Circular border
                 ),
                 child: Text(
                   widget.product.fields.productCategory,
                   style: const TextStyle(
-                    color: Color.fromARGB(255, 161,44,44,), // Red text color
+                    color: Color.fromARGB(255, 161, 44, 44), // Red text color
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-            const SizedBox(height: 10),
-            Text(
-              priceValues.reverse[widget.product.fields.price]!,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.green,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              widget.product.fields.description,
-              style: const TextStyle(
-                fontSize: 16,
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Likes: $likeCount',
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    isLiked ? Icons.thumb_up_rounded : Icons.thumb_up_rounded,
-                    color: isLiked ? Colors.blue : Colors.grey,
-                  ),
-                  iconSize: 30.0, // Set the desired icon size
-                  onPressed: () async {
-                    await _handleLikeButtonPress(request);
-                  },
+              const SizedBox(height: 10),
+              Text(
+                priceValues.reverse[widget.product.fields.price]!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.green,
                 ),
-                IconButton(
-                  icon: Icon(
-                    isWishlist ? Icons.star_rounded : Icons.star_border_rounded,
-                    color: isWishlist ? const Color.fromARGB(255, 235, 179, 5) : Colors.grey,
-                  ),
-                  iconSize: 30.0, // Set the desired icon size
-                  onPressed: () async {
-                    await _handleWishlistButton(request);
-                  },
+              ),
+              const SizedBox(height: 10),
+              Text(
+                widget.product.fields.description,
+                style: const TextStyle(
+                  fontSize: 16,
+                  height: 1.5,
                 ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Likes: $likeCount',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      isLiked ? Icons.thumb_up_rounded : Icons.thumb_up_rounded,
+                      color: isLiked ? Colors.blue : Colors.grey,
+                    ),
+                    iconSize: 30.0, // Set the desired icon size
+                    onPressed: () async {
+                      await _handleLikeButtonPress(request);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      isWishlist ? Icons.star_rounded : Icons.star_border_rounded,
+                      color: isWishlist ? const Color.fromARGB(255, 235, 179, 5) : Colors.grey,
+                    ),
+                    iconSize: 30.0, // Set the desired icon size
+                    onPressed: () async {
+                      await _handleWishlistButton(request);
+                    },
+                  ),
+                  SizedBox(
+                    width: 175, // Set the desired width
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red, // Red background
+                        foregroundColor: Colors.white, // White text
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Handle "See Stores" button press
+                      },
+                      child: Center(
+                        child: Text('See ${widget.product.fields.productName} Stores',
+                        textAlign: TextAlign.center,),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10,),
+                  SizedBox(
+                    width: 175, // Set the desired width
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.red), // Red border
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Handle "See Reviews" button press
+                      },
+                      child: Center(
+                        child: Text(
+                          'See ${widget.product.fields.productName} Reviews',
+                          style: TextStyle(color: Colors.red),
+                          textAlign: TextAlign.center, // Center-align the text
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+        
+      ),);
+  
   }
 }
