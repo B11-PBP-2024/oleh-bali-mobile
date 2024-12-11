@@ -121,7 +121,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         title: Text(widget.product.fields.productName),
       ),
       currentIndex: 2,
-       child: Padding(
+      child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
         child: SingleChildScrollView(
           child: Column(
@@ -164,7 +164,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               const SizedBox(height: 10),
               Text(
-                priceValues.reverse[widget.product.fields.price]!,
+                widget.product.fields.price!,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -257,8 +257,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ],
           ),
         )
-        
-      ),);
-  
+      )
+    ,);
   }
 }

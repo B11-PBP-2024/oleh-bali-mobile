@@ -37,7 +37,7 @@ class Fields {
     String productName;
     String productImage;
     String productCategory;
-    Price price;
+    String price;
     bool isWishlist;
     bool isLike;
     int likeCount;
@@ -58,7 +58,7 @@ class Fields {
         productName: json["product_name"],
         productImage: json["product_image"],
         productCategory: json["product_category"],
-        price: priceValues.map[json["price"]]!,
+        price: json["price"]!,
         isWishlist: json["is_wishlist"],
         isLike: json["is_like"],
         likeCount: json["like_count"],
@@ -69,7 +69,7 @@ class Fields {
         "product_name": productName,
         "product_image": productImage,
         "product_category": productCategory,
-        "price": priceValues.reverse[price],
+        "price": price,
         "is_wishlist": isWishlist,
         "is_like": isLike,
         "like_count": likeCount,
