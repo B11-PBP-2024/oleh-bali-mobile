@@ -181,7 +181,7 @@ class _ProductCardState extends State<ProductCard> {
               ),
               const SizedBox(height: 5),
               Text(
-                priceValues.reverse[widget.product.fields.price]!,
+                widget.product.fields.price,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
