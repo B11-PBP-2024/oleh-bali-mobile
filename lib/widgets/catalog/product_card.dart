@@ -145,12 +145,12 @@ class _ProductCardState extends State<ProductCard> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  widget.product.fields.productImage,
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'placeholder.jpg', 
+                  image: widget.product.fields.productImage,
                   width: double.infinity,
                   height: 150, // Adjust the height as needed
-                  fit: BoxFit.cover,
-                ),
+                  fit: BoxFit.cover,)
               ),
               const SizedBox(height: 10),
               Text(
@@ -181,7 +181,7 @@ class _ProductCardState extends State<ProductCard> {
               ),
               const SizedBox(height: 5),
               Text(
-                priceValues.reverse[widget.product.fields.price]!,
+                widget.product.fields.price,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
