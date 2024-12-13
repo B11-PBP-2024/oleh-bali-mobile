@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:oleh_bali_mobile/models/profile_seller_entry.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
 import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:oleh_bali_mobile/screens/user_profile/profile_detail.dart';
+import 'package:oleh_bali_mobile/models/profile_buyer_entry.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class BaseBuyer extends StatelessWidget {
   final Widget child;
@@ -19,6 +24,19 @@ class BaseBuyer extends StatelessWidget {
     required this.currentIndex,
     this.backgroundColor,
   });
+
+  Future<dynamic> fetchProfile(String url, CookieRequest request) async {
+    var response = await request.get(url);
+    var data = response;
+
+    if (data['profile_type'] == 'buyer') {
+      return ProfileBuyerEntry.fromJson(data).profile;
+    } else if (data['profile_type'] == 'seller') {
+      return ProfileSellerEntry.fromJson(data).profile;
+    } else {
+      throw Exception('Unknown profile type');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +86,11 @@ class BaseBuyer extends StatelessWidget {
             nextPage = const ShowArticle();
           } else if (index == 2) {
             nextPage = const ShowCatalog();
-          }else if (index == 5){
-            final response = await request.logout(
-                // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                "http://localhost:8000/auth/logout");
-              
+          } else if (index == 4) {
+            var profile = await fetchProfile('http://localhost:8000/profile/api/buyer/', request);
+            nextPage = ProfileDetail(profile: profile);
+          } else if (index == 5) {
+            final response = await request.logout("http://localhost:8000/auth/logout/");
             String message = response["message"];
             if (context.mounted) {
                 if (response['status']) {
@@ -87,7 +105,6 @@ class BaseBuyer extends StatelessWidget {
                         ),
                     );
                 }
-                
             }
             nextPage = const LoginBuyer();
           } else {
