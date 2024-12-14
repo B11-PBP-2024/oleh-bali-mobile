@@ -25,19 +25,6 @@ class BaseBuyer extends StatelessWidget {
     this.backgroundColor,
   });
 
-  Future<dynamic> fetchProfile(String url, CookieRequest request) async {
-    var response = await request.get(url);
-    var data = response;
-
-    if (data['profile_type'] == 'buyer') {
-      return ProfileBuyerEntry.fromJson(data).profile;
-    } else if (data['profile_type'] == 'seller') {
-      return ProfileSellerEntry.fromJson(data).profile;
-    } else {
-      throw Exception('Unknown profile type');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -87,8 +74,7 @@ class BaseBuyer extends StatelessWidget {
           } else if (index == 2) {
             nextPage = const ShowCatalog();
           } else if (index == 4) {
-            var profile = await fetchProfile('http://localhost:8000/profile/api/buyer/', request);
-            nextPage = ProfileDetail(profile: profile);
+            nextPage = const ProfileDetail();
           } else if (index == 5) {
             final response = await request.logout("http://localhost:8000/auth/logout/");
             String message = response["message"];

@@ -66,9 +66,7 @@ class BaseSeller extends StatelessWidget {
           } else if (index == 1) {
             nextPage = const ShowArticle();
           } else if (index == 2) {
-            var profile =
-                await fetchProfile('http://localhost:8000/profile/api/seller/');
-            nextPage = ProfileDetail(profile: profile);
+            nextPage = const ProfileDetail();
           } else if (index == 3) {
             final response =
                 await request.logout("http://localhost:8000/auth/logout/");

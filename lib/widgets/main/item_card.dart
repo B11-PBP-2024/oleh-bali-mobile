@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
@@ -7,12 +6,14 @@ import 'package:oleh_bali_mobile/widgets/main/item_homepage.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
+import '../../screens/user_profile/profile_detail.dart';
+
 class ItemCard extends StatelessWidget {
   // Menampilkan kartu dengan ikon dan nama.
 
-  final ItemHomepage item; 
-  
-  const ItemCard(this.item, {super.key}); 
+  final ItemHomepage item;
+
+  const ItemCard(this.item, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class ItemCard extends StatelessWidget {
       color: Theme.of(context).colorScheme.secondary,
       // Membuat sudut kartu melengkung.
       borderRadius: BorderRadius.circular(12),
-      
+
       child: InkWell(
         // Aksi ketika kartu ditekan.
         onTap:  () async {
@@ -32,12 +33,12 @@ class ItemCard extends StatelessWidget {
             ..showSnackBar(
               SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
             );
-          
+
           if (item.name == "Logout") {
             final response = await request.logout(
                 // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                 "http://localhost:8000/auth/logout");
-              
+
             String message = response["message"];
             if (context.mounted) {
                 if (response['status']) {
@@ -67,7 +68,14 @@ class ItemCard extends StatelessWidget {
                           context,
                           MaterialPageRoute(builder: (context) => const ShowCatalog()),
                       );
-            }
+          } else if (item.name == "Profile") {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfileDetail()),
+              );
+          }
+
+
         },
         // Container untuk menyimpan Icon dan Text
         child: Container(
@@ -95,5 +103,5 @@ class ItemCard extends StatelessWidget {
       ),
     );
   }
-  
+
 }

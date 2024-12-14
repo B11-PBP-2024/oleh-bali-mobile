@@ -4,27 +4,56 @@ import 'package:oleh_bali_mobile/base_seller.dart';
 import 'package:oleh_bali_mobile/models/profile_buyer_entry.dart';
 import 'package:oleh_bali_mobile/models/profile_seller_entry.dart';
 import 'package:oleh_bali_mobile/screens/user_profile/edit_profile.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ProfileDetail extends StatefulWidget {
-  final dynamic profile;
-
-  const ProfileDetail({super.key, required this.profile});
+  const ProfileDetail({super.key});
 
   @override
   _ProfileDetailState createState() => _ProfileDetailState();
 }
 
 class _ProfileDetailState extends State<ProfileDetail> {
-  late dynamic profile;
+  dynamic profile;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    profile = widget.profile;
+    fetchProfile();
+  }
+
+  Future<void> fetchProfile() async {
+    final request = context.read<CookieRequest>();
+    try {
+      final response = await request.get('http://localhost:8000/profile/api/buyer/');
+      if (response['profile_type'] == 'buyer') {
+        profile = ProfileBuyerEntry.fromJson(response).profile;
+      } else if (response['profile_type'] == 'seller') {
+        profile = ProfileSellerEntry.fromJson(response).profile;
+      }
+    } catch (e) {
+      // Handle error
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return profile is ProfileSeller
         ? BaseSeller(
             appBar: AppBar(
