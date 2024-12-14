@@ -30,6 +30,7 @@ class ProfileSellerEntry {
 
 class ProfileSeller {
     String storeName;
+    String userName;
     String city;
     String subdistrict;
     String village;
@@ -39,6 +40,7 @@ class ProfileSeller {
 
     ProfileSeller({
         required this.storeName,
+        required this.userName,
         required this.city,
         required this.subdistrict,
         required this.village,
@@ -49,6 +51,7 @@ class ProfileSeller {
 
     factory ProfileSeller.fromJson(Map<String, dynamic> json) => ProfileSeller(
         storeName: json["store_name"],
+        userName: json["username"],
         city: json["city"],
         subdistrict: json["subdistrict"],
         village: json["village"],
@@ -59,6 +62,7 @@ class ProfileSeller {
 
     Map<String, dynamic> toJson() => {
         "store_name": storeName,
+        "username": userName,
         "city": city,
         "subdistrict": subdistrict,
         "village": village,
