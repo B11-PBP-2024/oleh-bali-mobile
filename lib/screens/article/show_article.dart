@@ -88,13 +88,13 @@ class _ShowArticleState extends State<ShowArticle> {
                 _navigateToAddArticle();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF2463EB),
+                backgroundColor: const Color(0xFF2463EB),
                 foregroundColor: Colors.white,
               ),
               child: const Text("Add Article"),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -135,7 +135,7 @@ class _ShowArticleState extends State<ShowArticle> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Expanded(
             child: FutureBuilder(
               future: _fetchArticlesFuture,

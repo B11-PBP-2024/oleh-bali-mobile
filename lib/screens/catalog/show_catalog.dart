@@ -69,7 +69,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
     if(searchValue == "") {
       searchValue = "NoSearch";
     }
-    final response = await request.get("http://localhost:8000/catalog/json/key:${searchValue}/cat:${selectedFilter}");
+    final response = await request.get("http://localhost:8000/catalog/json/key:$searchValue/cat:$selectedFilter");
     List<ProductEntry> fetchedProducts = [];
     var data = response;
     for (var d in data) {
@@ -102,15 +102,15 @@ class _ShowCatalogState extends State<ShowCatalog> {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Search...',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
                   ),
                   onChanged: (value) {
                     // Handle search input
@@ -127,9 +127,9 @@ class _ShowCatalogState extends State<ShowCatalog> {
                 future: _categoriesFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
-                    return Text('Error loading categories');
+                    return const Text('Error loading categories');
                   } else {
                     return Expanded(
                       child: DropdownButtonFormField<String>(
@@ -141,7 +141,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
                           ),
                           filled: true,
                           fillColor: Colors.white,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
                         ),
                         onChanged: (String? newValue) {
                           setState(() {

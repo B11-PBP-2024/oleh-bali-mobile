@@ -85,7 +85,7 @@ class ArticleCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            if (article.img != null && article.img.isNotEmpty)
+            if (article.img.isNotEmpty)
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(

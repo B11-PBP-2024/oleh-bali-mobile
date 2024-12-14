@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/base_buyer.dart';
 import 'package:oleh_bali_mobile/models/product_entry.dart';
+import 'package:oleh_bali_mobile/screens/see_stores/see_stores.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -149,7 +150,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 3.0),
                 decoration: BoxDecoration(
                   color: Colors.transparent, // Background color inside the border
-                  border: Border.all(color: Color.fromARGB(255, 161, 44, 44)),
+                  border: Border.all(color: const Color.fromARGB(255, 161, 44, 44)),
                   borderRadius: BorderRadius.circular(12.0), // Circular border
                 ),
                 child: Text(
@@ -164,7 +165,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               const SizedBox(height: 10),
               Text(
-                widget.product.fields.price!,
+                widget.product.fields.price,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -223,6 +224,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       onPressed: () {
                         // Handle "See Stores" button press
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SeeStores(productId: widget.product.pk)));
                       },
                       child: Center(
                         child: Text('See ${widget.product.fields.productName} Stores',
@@ -235,7 +238,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     width: 175, // Set the desired width
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.red), // Red border
+                        side: const BorderSide(color: Colors.red), // Red border
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4.0),
                         ),
@@ -246,7 +249,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       child: Center(
                         child: Text(
                           'See ${widget.product.fields.productName} Reviews',
-                          style: TextStyle(color: Colors.red),
+                          style: const TextStyle(color: Colors.red),
                           textAlign: TextAlign.center, // Center-align the text
                         ),
                       ),

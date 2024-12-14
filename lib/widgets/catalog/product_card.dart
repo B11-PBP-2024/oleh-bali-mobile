@@ -166,7 +166,7 @@ class _ProductCardState extends State<ProductCard> {
                 padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 3.0),
                 decoration: BoxDecoration(
                   color: Colors.transparent, // Background color inside the border
-                  border: Border.all(color: Color.fromARGB(255, 161,44,44,)),
+                  border: Border.all(color: const Color.fromARGB(255, 161,44,44,)),
                   borderRadius: BorderRadius.circular(12.0), // Circular border
                 ),
                 child: Text(

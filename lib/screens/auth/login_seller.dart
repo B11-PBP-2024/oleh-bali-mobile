@@ -1,6 +1,5 @@
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
 import 'package:oleh_bali_mobile/screens/auth/register_seller.dart';
-import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/screens/main/seller_homepage.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
