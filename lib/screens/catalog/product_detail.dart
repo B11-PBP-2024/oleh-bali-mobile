@@ -31,7 +31,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Future<void> _handleWishlistButton(CookieRequest request) async {
     if (!isWishlist) {
       final response = await request.postJson(
-        "http://localhost:8000/wishlist/add/",
+        "http://192.168.0.10:8000/wishlist/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -49,7 +49,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       }
     } else {
       final response = await request.postJson(
-        "http://localhost:8000/wishlist/delete/",
+        "http://192.168.0.10:8000/wishlist/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -71,7 +71,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Future<void> _handleLikeButtonPress(CookieRequest request) async {
     if (!isLiked) {
       final response = await request.postJson(
-        "http://localhost:8000/like/add/",
+        "http://192.168.0.10:8000/like/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -92,7 +92,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       }
     } else {
       final response = await request.postJson(
-        "http://localhost:8000/like/delete/",
+        "http://192.168.0.10:8000/like/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),

@@ -33,7 +33,7 @@ class _ProductCardState extends State<ProductCard> {
   Future<void> _handleWishlistButton(CookieRequest request) async {
     if (!isWishlist) {
       final response = await request.postJson(
-        "http://localhost:8000/wishlist/add/",
+        "http://192.168.0.10:8000/wishlist/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -52,7 +52,7 @@ class _ProductCardState extends State<ProductCard> {
       }
     } else {
       final response = await request.postJson(
-        "http://localhost:8000/wishlist/delete/",
+        "http://192.168.0.10:8000/wishlist/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -75,7 +75,7 @@ class _ProductCardState extends State<ProductCard> {
   Future<void> _handleLikeButtonPress(CookieRequest request) async {
     if (!isLiked) {
       final response = await request.postJson(
-        "http://localhost:8000/like/add/",
+        "http://192.168.0.10:8000/like/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -97,7 +97,7 @@ class _ProductCardState extends State<ProductCard> {
       }
     } else {
       final response = await request.postJson(
-        "http://localhost:8000/like/delete/",
+        "http://192.168.0.10:8000/like/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -139,14 +139,14 @@ class _ProductCardState extends State<ProductCard> {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: FadeInImage.assetNetwork(
-                  placeholder: 'placeholder.jpg', 
+                  placeholder: 'assets/placeholder.jpg', 
                   image: widget.product.fields.productImage,
                   width: double.infinity,
                   height: 150, // Adjust the height as needed
@@ -182,9 +182,9 @@ class _ProductCardState extends State<ProductCard> {
               const SizedBox(height: 5),
               Text(
                 widget.product.fields.price,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: widget.product.fields.price.length > 10? 14 : 16,
                   color: Colors.green,
                 ),
               ),
