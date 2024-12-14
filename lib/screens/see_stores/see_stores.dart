@@ -49,7 +49,7 @@ class _SeeStoresPageState extends State<SeeStores> {
             storesProduct!.sellersWithPrices.isEmpty) {
           return BaseBuyer(
             appBar: AppBar(
-              title: const Text("See Stores"),
+              title: Text("See Stores"),
             ),
             currentIndex: 2,
             child: const Center(

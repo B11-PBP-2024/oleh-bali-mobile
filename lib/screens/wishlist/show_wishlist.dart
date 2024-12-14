@@ -14,7 +14,7 @@ class WishlistPage extends StatefulWidget {
 }
 
 class _WishlistPageState extends State<WishlistPage> {
-  WishlistEntry? wishlist;
+  WishlistEntry? wishlist = null;
   late Future<void> _fetchWishlistFuture;
   late String? total;
 
@@ -45,7 +45,7 @@ class _WishlistPageState extends State<WishlistPage> {
     final request = context.watch<CookieRequest>();
     return BaseBuyer(
       appBar: AppBar(
-        title: const Text("Wishlist"),
+        title: Text("Wishlist"),
       ),
       currentIndex: 3,
       child: Padding(
@@ -58,7 +58,7 @@ class _WishlistPageState extends State<WishlistPage> {
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
-                      } else if (wishlist!.wishlists.isEmpty) {
+                      } else if (wishlist == null || wishlist!.wishlists.isEmpty) {
                         return const Center(
                           child: Text(
                             "No items in your wishlist!.",
@@ -145,14 +145,14 @@ class WishlistItemCard extends StatelessWidget {
   final VoidCallback onDelete;
 
   const WishlistItemCard({
-    super.key,
+    Key? key,
     required this.wishlist,
     required this.onDelete,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final product = wishlist.products.first;
+    final product = wishlist!.products.first;
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -184,11 +184,11 @@ class WishlistItemCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    wishlist.minPrice == 0 && wishlist.maxPrice == 0
+                    wishlist!.minPrice == 0 && wishlist!.maxPrice == 0
                         ? "Price not available"
-                        : wishlist.minPrice == wishlist.maxPrice
-                            ? "Rp${wishlist.minPrice}"
-                            : "Rp${wishlist.minPrice} - Rp${wishlist.maxPrice}",
+                        : wishlist!.minPrice == wishlist!.maxPrice
+                            ? "Rp${wishlist!.minPrice}"
+                            : "Rp${wishlist!.minPrice} - Rp${wishlist!.maxPrice}",
                     style: const TextStyle(color: Colors.grey),
                   ),
                   const SizedBox(height: 4),
