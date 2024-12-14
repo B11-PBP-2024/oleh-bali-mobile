@@ -26,6 +26,16 @@ class _EditProfileState extends State<EditProfile> {
   late TextEditingController _nationalityController;
   late TextEditingController _profilePictureController;
 
+  // Add new state variables for dropdown data
+  Map<String, String> nationalities = {};
+  Map<String, String> subdistricts = {};
+  Map<String, String> villages = {};
+
+  // Add variables for selected values
+  String? selectedNationality;
+  String? selectedSubdistrict;
+  String? selectedVillage;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +46,7 @@ class _EditProfileState extends State<EditProfile> {
     if (widget.profile is ProfileBuyer) {
       _nationalityController =
           TextEditingController(text: widget.profile.nationality);
+      selectedNationality = widget.profile.nationality;
     } else if (widget.profile is ProfileSeller) {
       _cityController = TextEditingController(text: widget.profile.city);
       _subdistrictController =
@@ -43,7 +54,12 @@ class _EditProfileState extends State<EditProfile> {
       _villageController = TextEditingController(text: widget.profile.village);
       _addressController = TextEditingController(text: widget.profile.address);
       _mapsController = TextEditingController(text: widget.profile.maps);
+      selectedSubdistrict = widget.profile.subdistrict;
+      selectedVillage = widget.profile.village;
     }
+
+    // Fetch dropdown data
+    fetchDataDropdown();
   }
 
   @override
@@ -60,6 +76,17 @@ class _EditProfileState extends State<EditProfile> {
       _mapsController.dispose();
     }
     super.dispose();
+  }
+
+  Future<void> fetchDataDropdown() async {
+    final request = context.read<CookieRequest>();
+    final response = await request.get('http://localhost:8000/profile/api/edit/choices/');
+
+    setState(() {
+      nationalities = Map<String, String>.from(response['nationalities']);
+      subdistricts = Map<String, String>.from(response['subdistricts']);
+      villages = Map<String, String>.from(response['villages']);
+    });
   }
 
   @override
@@ -100,12 +127,24 @@ class _EditProfileState extends State<EditProfile> {
               ),
               const SizedBox(height: 16),
               if (widget.profile is ProfileBuyer) ...[
-                TextFormField(
-                  controller: _nationalityController,
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: selectedNationality,
                   decoration: const InputDecoration(labelText: 'Nationality'),
+                  items: nationalities.entries.map((entry) {
+                    return DropdownMenuItem<String>(
+                      value: entry.key,
+                      child: Text(entry.value),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedNationality = value;
+                    });
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your nationality';
+                      return 'Please select your nationality';
                     }
                     return null;
                   },
@@ -122,23 +161,45 @@ class _EditProfileState extends State<EditProfile> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
-                  controller: _subdistrictController,
+                DropdownButtonFormField<String>(
+                  value: selectedSubdistrict,
                   decoration: const InputDecoration(labelText: 'Subdistrict'),
+                  items: subdistricts.entries.map((entry) {
+                    return DropdownMenuItem<String>(
+                      value: entry.key,
+                      child: Text(entry.value),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedSubdistrict = value;
+                    });
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your subdistrict';
+                      return 'Please select your subdistrict';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
-                  controller: _villageController,
+                DropdownButtonFormField<String>(
+                  value: selectedVillage,
                   decoration: const InputDecoration(labelText: 'Village'),
+                  items: villages.entries.map((entry) {
+                    return DropdownMenuItem<String>(
+                      value: entry.key,
+                      child: Text(entry.value),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedVillage = value;
+                    });
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your village';
+                      return 'Please select your village';
                     }
                     return null;
                   },
@@ -180,11 +241,11 @@ class _EditProfileState extends State<EditProfile> {
                           'profile_picture': _profilePictureController.text,
                           'store_name': _storeNameController.text,
                           if (widget.profile is ProfileBuyer)
-                            'nationality': _nationalityController.text,
+                            'nationality': selectedNationality,
                           if (widget.profile is ProfileSeller) ...{
                             'city': _cityController.text,
-                            'subdistrict': _subdistrictController.text,
-                            'village': _villageController.text,
+                            'subdistrict': selectedSubdistrict,
+                            'village': selectedVillage,
                             'address': _addressController.text,
                             'maps': _mapsController.text,
                           },
