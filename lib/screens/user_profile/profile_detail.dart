@@ -6,6 +6,7 @@ import 'package:oleh_bali_mobile/models/profile_seller_entry.dart';
 import 'package:oleh_bali_mobile/screens/user_profile/edit_profile.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 
 class ProfileDetail extends StatefulWidget {
   const ProfileDetail({super.key});
@@ -120,7 +121,18 @@ class _ProfileDetailState extends State<ProfileDetail> {
                             ),
                             child: CircleAvatar(
                               radius: 60,
-                              backgroundImage: NetworkImage(profile.profilePicture),
+                              backgroundColor: Colors.grey[200],
+                              backgroundImage: NetworkImage(
+                                profile.profilePicture,
+                              ),
+                              onBackgroundImageError: (exception, stackTrace) {
+                                if (kDebugMode) {
+                                  print('Error loading profile image: $exception');
+                                }
+                              },
+                              child: profile.profilePicture.isEmpty
+                                  ? const Icon(Icons.person, size: 60, color: Colors.grey)
+                                  : null,
                             ),
                           ),
                         ),
