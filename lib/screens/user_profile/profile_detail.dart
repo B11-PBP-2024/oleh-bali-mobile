@@ -127,7 +127,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                         const SizedBox(height: 16),
                         // User name with animation
                         Text(
-                          profile.userName,
+                          profile.storeName,
                           style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                           ),
                         ),
                         Text(
-                          profile.storeName,
+                          profile.userName,
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white.withOpacity(0.9),
