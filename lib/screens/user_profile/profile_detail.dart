@@ -27,14 +27,33 @@ class _ProfileDetailState extends State<ProfileDetail> {
   Future<void> fetchProfile() async {
     final request = context.read<CookieRequest>();
     try {
-      final response = await request.get('http://localhost:8000/profile/api/buyer/');
-      if (response['profile_type'] == 'buyer') {
-        profile = ProfileBuyerEntry.fromJson(response).profile;
-      } else if (response['profile_type'] == 'seller') {
-        profile = ProfileSellerEntry.fromJson(response).profile;
+      // Try buyer endpoint
+      try {
+        final buyerResponse = await request.get('http://localhost:8000/profile/api/buyer/');
+        if (buyerResponse['profile_type'] == 'buyer') {
+          profile = ProfileBuyerEntry.fromJson(buyerResponse).profile;
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
+          return;
+        }
+      } catch (e) {
+        // If buyer endpoint fails, continue to try seller endpoint
+      }
+
+      // Try seller endpoint
+      try {
+        final sellerResponse = await request.get('http://localhost:8000/profile/api/seller/');
+        if (sellerResponse['profile_type'] == 'seller') {
+          profile = ProfileSellerEntry.fromJson(sellerResponse).profile;
+        }
+      } catch (e) {
+        // Handle seller endpoint error
       }
     } catch (e) {
-      // Handle error
+      // Handle any other errors
     } finally {
       if (mounted) {
         setState(() {
