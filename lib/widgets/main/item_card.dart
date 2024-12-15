@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
+import 'package:oleh_bali_mobile/screens/seller/products_page.dart';
 import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/store/show_store.dart';
 import 'package:oleh_bali_mobile/screens/user_profile/profile_detail.dart';
@@ -66,6 +67,11 @@ class ItemCard extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const ShowCatalog()),
+            );
+          } else if (item.name == "My Products") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProductsPage(),),
             );
           } else if (item.name == "Profile") {
             Navigator.pushReplacement(

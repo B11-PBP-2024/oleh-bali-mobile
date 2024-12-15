@@ -4,6 +4,8 @@ import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
 import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
+import 'package:oleh_bali_mobile/screens/main/seller_homepage.dart';
+import 'package:oleh_bali_mobile/screens/seller/products_page.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:oleh_bali_mobile/screens/user_profile/profile_detail.dart';
@@ -62,9 +64,9 @@ class BaseSeller extends StatelessWidget {
           }
           Widget nextPage;
           if (index == 0) {
-            nextPage = BuyerHomepage();
+            nextPage = SellerHomepage();
           } else if (index == 1) {
-            nextPage = const ShowArticle();
+            nextPage = const ProductsPage();
           } else if (index == 2) {
             nextPage = const ProfileDetail();
           } else if (index == 3) {
