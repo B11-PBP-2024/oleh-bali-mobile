@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:oleh_bali_mobile/models/profile_buyer_entry.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
 import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
+import 'package:oleh_bali_mobile/screens/main/seller_homepage.dart';
+import 'package:oleh_bali_mobile/screens/seller/products_page.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:oleh_bali_mobile/screens/user_profile/profile_detail.dart';
+import 'package:oleh_bali_mobile/models/profile_seller_entry.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class BaseSeller extends StatelessWidget {
   final Widget child;
@@ -26,7 +33,8 @@ class BaseSeller extends StatelessWidget {
     return Scaffold(
       appBar: appBar,
       body: child,
-      backgroundColor: backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor:
+          backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
@@ -48,42 +56,36 @@ class BaseSeller extends StatelessWidget {
         ],
         currentIndex: currentIndex,
         selectedItemColor: Theme.of(context).colorScheme.primary,
-        unselectedItemColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+        unselectedItemColor:
+            Theme.of(context).colorScheme.primary.withOpacity(0.5),
         onTap: (index) async {
           if (index == currentIndex) {
             return;
           }
           Widget nextPage;
           if (index == 0) {
-            return;
-            // TODO: ISI PAGE YANG SESUAI
-            nextPage = BuyerHomepage();
+            nextPage = SellerHomepage();
           } else if (index == 1) {
-            return;
-            nextPage = const ShowArticle();
+            nextPage = const ProductsPage();
           } else if (index == 2) {
-            return;
-            nextPage = const ShowCatalog();
-          }else if (index == 3){
-            final response = await request.logout(
-                // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                "http://localhost:8000/auth/logout");
-              
+            nextPage = const ProfileDetail();
+          } else if (index == 3) {
+            final response =
+                await request.logout("http://localhost:8000/auth/logout/");
             String message = response["message"];
             if (context.mounted) {
-                if (response['status']) {
-                    String uname = response["username"];
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("$message Sampai jumpa, $uname."),
-                    ));
-                } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text(message),
-                        ),
-                    );
-                }
-                
+              if (response['status']) {
+                String uname = response["username"];
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("$message Sampai jumpa, $uname."),
+                ));
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(message),
+                  ),
+                );
+              }
             }
             nextPage = const LoginBuyer();
           } else {
@@ -93,7 +95,8 @@ class BaseSeller extends StatelessWidget {
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) => nextPage,
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
                 return child;
               },
             ),
@@ -101,5 +104,23 @@ class BaseSeller extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+Future<dynamic> fetchProfile(String url) async {
+  var response = await http.get(
+    Uri.parse(url),
+    headers: {"Content-Type": "application/json"},
+  );
+
+  if (response.statusCode == 200) {
+    var data = jsonDecode(utf8.decode(response.bodyBytes));
+    if (data['profile_type'] == 'buyer') {
+      return ProfileBuyer.fromJson(data['profile']);
+    } else if (data['profile_type'] == 'seller') {
+      return ProfileSeller.fromJson(data['profile']);
+    }
+  } else {
+    throw Exception('Failed to load profile');
   }
 }
