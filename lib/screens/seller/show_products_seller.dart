@@ -53,14 +53,6 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
     CategoryModel(name: "Beverage", icon: Icons.local_drink_outlined),
   ];
 
-  String formatRupiah(double number) {
-    if (number == 0) return 'Rp 0';
-    return 'Rp ${number.toString().replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (Match m) => '${m[1]}.',
-        )}';
-  }
-
   Future<List<ProductSellerEntry>> fetchProducts() async {
     final request = context.read<CookieRequest>();
     var url = 'http://localhost:8000/products/seller/show-products/json/';
@@ -235,60 +227,61 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Categories with Icons
+                  // Categories
                   SizedBox(
-  height: 40,
-  child: ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: categoryList.length,
-    itemBuilder: (context, index) {
-      final category = categoryList[index];
-      final isSelected = selectedCategory == category.name;
-      
-      return Container(
-        margin: const EdgeInsets.only(right: 12),
-        child: InkWell(
-          onTap: () {
-            setState(() {
-              selectedCategory = isSelected ? null : category.name;
-              refreshProducts();
-            });
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: isSelected ? Colors.blue : Colors.transparent,
-                  width: 2,
-                ),
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  category.icon,
-                  size: 18,
-                  color: isSelected ? Colors.blue : Colors.grey[700],
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  category.name,
-                  style: TextStyle(
-                    color: isSelected ? Colors.blue : Colors.grey[700],
-                    fontSize: 13,
-                    fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
+                    height: 40,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categoryList.length,
+                      itemBuilder: (context, index) {
+                        final category = categoryList[index];
+                        final isSelected = selectedCategory == category.name;
+                        
+                        return Container(
+                          margin: const EdgeInsets.only(right: 12),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedCategory = isSelected ? null : category.name;
+                                refreshProducts();
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: isSelected ? Colors.blue : Colors.transparent,
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    category.icon,
+                                    size: 18,
+                                    color: isSelected ? Colors.blue : Colors.grey[700],
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    category.name,
+                                    style: TextStyle(
+                                      color: isSelected ? Colors.blue : Colors.grey[700],
+                                      fontSize: 13,
+                                      fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    },
-  ),
-),
+                  const SizedBox(height: 16),
 
                   // Add Product Buttons
                   Row(
@@ -338,7 +331,7 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Product Grid
+                  // Products Grid
                   FutureBuilder<List<ProductSellerEntry>>(
                     future: _products,
                     builder: (context, snapshot) {
@@ -367,31 +360,58 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                         );
                       }
 
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.75,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
-                        ),
-                        padding: const EdgeInsets.only(bottom: 60),
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          final product = snapshot.data![index];
-                          return ProductCard(
-                            product: product,
-                            onEdit: () async {
-                              final result = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditProductScreen(product: product),
-                                ),
+                      return LayoutBuilder(
+                        builder: (context, constraints) {
+                          // Hitung jumlah kolom berdasarkan lebar layar
+                          double width = constraints.maxWidth;
+                          int crossAxisCount;
+                          double aspectRatio;
+
+                          if (width > 1100) {
+                            crossAxisCount = 4;  // 4 kolom untuk layar sangat lebar
+                            aspectRatio = 0.75;
+                          } else if (width > 800) {
+                            crossAxisCount = 3;  // 3 kolom untuk layar medium
+                            aspectRatio = 0.75;
+                          } else if (width > 600) {
+                            crossAxisCount = 3;  // 3 kolom untuk tablet
+                            aspectRatio = 0.8;
+                          } else {
+                            crossAxisCount = 2;  // 2 kolom untuk mobile
+                            aspectRatio = 0.85;
+                          }
+
+                          return GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: crossAxisCount,
+                              childAspectRatio: aspectRatio,
+                              crossAxisSpacing: width > 600 ? 16 : 8,
+                              mainAxisSpacing: width > 600 ? 16 : 8,
+                            ),
+                            padding: EdgeInsets.only(
+                              bottom: 60,
+                              left: width > 600 ? 8 : 0,
+                              right: width > 600 ? 8 : 0,
+                            ),
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              final product = snapshot.data![index];
+                              return ProductCard(
+                                product: product,
+                                onEdit: () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditProductScreen(product: product),
+                                    ),
+                                  );
+                                  if (result == true) refreshProducts();
+                                },
+                                onDelete: () => showDeleteDialog(context, product),
                               );
-                              if (result == true) refreshProducts();
                             },
-                            onDelete: () => showDeleteDialog(context, product),
                           );
                         },
                       );

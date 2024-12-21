@@ -24,17 +24,17 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      clipBehavior: Clip.antiAlias,
+      color: Colors.white,
       margin: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Product Image
+          // Image Section
           Container(
-            height: 120, 
             width: double.infinity,
+            height: 120,
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: Colors.grey[200],
               image: product.image.isNotEmpty
                   ? DecorationImage(
                       image: NetworkImage(product.image),
@@ -43,75 +43,85 @@ class ProductCard extends StatelessWidget {
                   : null,
             ),
             child: product.image.isEmpty
-                ? const Icon(Icons.image, size: 50)
+                ? Icon(
+                    Icons.image_not_supported,
+                    size: 40,
+                    color: Colors.grey[400],
+                  )
                 : null,
           ),
-          const SizedBox(height: 4),
 
-          // Product Details
+          // Product Info
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Product Name
                 Text(
                   product.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 1),
+                const SizedBox(height: 4),
 
-                // Product Price
+                // Price
                 Text(
                   formatRupiah(product.price),
                   style: TextStyle(
-                    color: Colors.blue[700],
-                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 13,
                   ),
                 ),
-                const SizedBox(height: 1),
+                const SizedBox(height: 2),
 
-                // Product Category
-                Text(
-                  product.category,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          
-          const Spacer(), 
-
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                // Edit Button
-                IconButton(
-                  icon: const Icon(
-                    Icons.edit,
-                    size: 18,
-                    color: Colors.blue,
-                  ),
-                  onPressed: onEdit,
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                    size: 18,
-                    color: Colors.blue,
-                  ),
-                  onPressed: onDelete,
+                // Category
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        product.category,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    // Action buttons
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit, size: 16),
+                          color: Colors.blue,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(
+                            minWidth: 24,
+                            minHeight: 24,
+                          ),
+                          onPressed: onEdit,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete, size: 16),
+                          color: Colors.blue,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(
+                            minWidth: 24,
+                            minHeight: 24,
+                          ),
+                          onPressed: onDelete,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
