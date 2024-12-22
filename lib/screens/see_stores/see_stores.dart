@@ -64,7 +64,7 @@ class _SeeStoresPageState extends State<SeeStores> {
             appBar: AppBar(
               title: Text("See ${storesProduct!.product.productName} Stores"),
             ),
-            currentIndex: 3,
+            currentIndex: 2,
             child: ListView.builder(
               itemCount: storesProduct!.sellersWithPrices.length,
               itemBuilder: (context, index) {

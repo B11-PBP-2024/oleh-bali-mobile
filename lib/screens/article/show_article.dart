@@ -144,7 +144,7 @@ class _ShowArticleState extends State<ShowArticle> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (articles.isEmpty) {
                   return const Center(
-                    child: Text("No articles found"),
+                    child: Text("No articles found", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold), ),
                   );
                 } else {
                   return ListView.builder(
