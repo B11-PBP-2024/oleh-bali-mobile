@@ -50,6 +50,8 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/olehbali.png"
   remove_alpha_ios: true
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/olehbali.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
