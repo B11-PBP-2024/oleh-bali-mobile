@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
+import 'package:oleh_bali_mobile/screens/auth/login_seller.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,7 @@ class _RegisterSellerState extends State<RegisterSeller> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register Buyer'),
+        title: const Text('Register Seller'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -30,6 +31,7 @@ class _RegisterSellerState extends State<RegisterSeller> {
           },
         ),
       ),
+      backgroundColor: const Color.fromARGB(255,185,28,27),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -140,7 +142,7 @@ class _RegisterSellerState extends State<RegisterSeller> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LoginBuyer()),
+                                    builder: (context) => const LoginSeller()),
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(

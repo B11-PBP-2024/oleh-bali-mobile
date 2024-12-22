@@ -48,6 +48,7 @@ class _LoginSellerState extends State<LoginSeller> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
+      backgroundColor: const Color.fromARGB(255,185,28,27),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -169,7 +170,7 @@ class _LoginSellerState extends State<LoginSeller> {
                       text: const TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Trying to login as Buyer? ',
+                            text: 'Buying souvenirs? ',
                             style: TextStyle(
                               color: Colors.blue,
                               fontSize: 16.0,

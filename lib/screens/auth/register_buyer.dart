@@ -29,6 +29,7 @@ class _RegisterBuyerState extends State<RegisterBuyer> {
           },
         ),
       ),
+      backgroundColor: const Color.fromARGB(255,185,28,27),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
