@@ -105,56 +105,88 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
   }
 
   void showDeleteDialog(BuildContext context, ProductSellerEntry product) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete "${product.name}"?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Center(
+          child: Text(
+            'Confirm Deletion',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
             ),
-            TextButton(
-              onPressed: () async {
-                final request = context.read<CookieRequest>();
-                final response = await request.post(
-                  'http://localhost:8000/products/seller/delete/${product.id}/json/',
-                  {},
-                );
+          ),
+        ),
+        content: Text(
+          'Are you sure you want to delete "${product.name}"?',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+          ),
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+              const SizedBox(width: 8), // Jarak antara tombol
+              TextButton(
+                onPressed: () async {
+                  final request = context.read<CookieRequest>();
+                  final response = await request.post(
+                    'http://localhost:8000/products/seller/delete/${product.id}/json/',
+                    {},
+                  );
 
-                Navigator.pop(context);
-                if (response['status'] == true) {
-                  refreshProducts();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Product successfully deleted!')),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Failed to delete product')),
-                  );
-                }
-              },
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
-              child: const Text('Delete'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+                  Navigator.pop(context);
+                  if (response['status'] == true) {
+                    refreshProducts();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Product successfully deleted!')),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Failed to delete product')),
+                    );
+                  }
+                },
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+    final isVerySmallScreen = screenWidth < 320;
+    
     return BaseSeller(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
+        title: Text(
           'My Products',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
+            fontSize: isVerySmallScreen ? 16 : (isSmallScreen ? 18 : 20),
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -163,44 +195,74 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
       child: Stack(
         children: [
           SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.fromLTRB(
+                isVerySmallScreen ? 6 : (isSmallScreen ? 8.0 : 16.0),
+                16.0,
+                isVerySmallScreen ? 6 : (isSmallScreen ? 8.0 : 16.0),
+                110.0
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Center(
-                    child: Text(
-                      "The Products You're Selling",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Search Bar
                   TextField(
                     controller: searchController,
+                    style: TextStyle(
+                      fontSize: isVerySmallScreen ? 11 : (isSmallScreen ? 12 : 14)
+                    ),
                     decoration: InputDecoration(
                       hintText: 'Search products...',
-                      prefixIcon: const Icon(Icons.search),
+                      hintStyle: TextStyle(
+                        fontSize: isVerySmallScreen ? 11 : (isSmallScreen ? 12 : 14)
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search, 
+                        size: isVerySmallScreen ? 16 : (isSmallScreen ? 20 : 24)
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: isVerySmallScreen ? 6 : (isSmallScreen ? 8 : 12),
+                        horizontal: 12
                       ),
                     ),
                     onChanged: (value) => refreshProducts(),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: isSmallScreen ? 12 : 16),
 
-                  // Sort Dropdown
                   DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       labelText: 'Sort by Price',
-                      border: const OutlineInputBorder(),
+                      labelStyle: TextStyle(
+                        fontSize: isVerySmallScreen ? 11 : (isSmallScreen ? 12 : 14),
+                        color: Colors.blue,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Colors.blue),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Colors.blue),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Colors.blue, width: 2),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: isVerySmallScreen ? 6 : (isSmallScreen ? 8 : 12),
+                        horizontal: 12
+                      ),
                       suffixIcon: selectedSort != null
                           ? IconButton(
-                              icon: const Icon(Icons.clear),
+                              icon: Icon(
+                                Icons.clear, 
+                                size: isVerySmallScreen ? 16 : (isSmallScreen ? 18 : 20),
+                                color: Colors.blue,
+                              ),
                               onPressed: () {
                                 setState(() {
                                   selectedSort = null;
@@ -214,7 +276,13 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                     items: sortOptions.keys.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            fontSize: isVerySmallScreen ? 11 : (isSmallScreen ? 12 : 14),
+                            color: Colors.blue,
+                          ),
+                        ),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
@@ -223,13 +291,24 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                         refreshProducts();
                       });
                     },
-                    hint: const Text('No sorting'),
+                    icon: const Icon(Icons.arrow_drop_down, color: Colors.blue),
+                    dropdownColor: Colors.white,
+                    hint: Text(
+                      'No Sorting',
+                      style: TextStyle(
+                        fontSize: isVerySmallScreen ? 11 : (isSmallScreen ? 12 : 14),
+                        color: Colors.blue,
+                      ),
+                    ),
+                    style: TextStyle(
+                      fontSize: isVerySmallScreen ? 11 : (isSmallScreen ? 12 : 14),
+                      color: Colors.blue,
+                    ),
                   ),
-                  const SizedBox(height: 16),
-
-                  // Categories
+                  SizedBox(height: isVerySmallScreen ? 8 : (isSmallScreen ? 12 : 16)),
+                  
                   SizedBox(
-                    height: 40,
+                    height: isVerySmallScreen ? 30 : (isSmallScreen ? 36 : 40),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: categoryList.length,
@@ -238,7 +317,9 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                         final isSelected = selectedCategory == category.name;
                         
                         return Container(
-                          margin: const EdgeInsets.only(right: 12),
+                          margin: EdgeInsets.only(
+                            right: isVerySmallScreen ? 6 : (isSmallScreen ? 8 : 12)
+                          ),
                           child: InkWell(
                             onTap: () {
                               setState(() {
@@ -247,7 +328,10 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                               });
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isVerySmallScreen ? 4 : (isSmallScreen ? 6 : 8),
+                                vertical: isVerySmallScreen ? 2 : (isSmallScreen ? 3 : 4),
+                              ),
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
@@ -261,15 +345,15 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                                 children: [
                                   Icon(
                                     category.icon,
-                                    size: 18,
+                                    size: isVerySmallScreen ? 14 : (isSmallScreen ? 16 : 18),
                                     color: isSelected ? Colors.blue : Colors.grey[700],
                                   ),
-                                  const SizedBox(width: 6),
+                                  SizedBox(width: 4),
                                   Text(
                                     category.name,
                                     style: TextStyle(
                                       color: isSelected ? Colors.blue : Colors.grey[700],
-                                      fontSize: 13,
+                                      fontSize: isVerySmallScreen ? 10 : (isSmallScreen ? 11 : 13),
                                       fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
                                     ),
                                   ),
@@ -281,19 +365,28 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: isVerySmallScreen ? 8 : (isSmallScreen ? 12 : 16)),
 
-                  // Add Product Buttons
                   Row(
                     children: [
                       Expanded(
                         child: ElevatedButton.icon(
-                          icon: const Icon(Icons.add, size: 18),
-                          label: const Text("Add New Product"),
+                          icon: Icon(
+                            Icons.add, 
+                            size: isVerySmallScreen ? 14 : (isSmallScreen ? 16 : 18)
+                          ),
+                          label: Text(
+                            "Add New Product",
+                            style: TextStyle(
+                              fontSize: isVerySmallScreen ? 11 : (isSmallScreen ? 12 : 14),
+                            ),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).colorScheme.primary,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            padding: EdgeInsets.symmetric(
+                              vertical: isVerySmallScreen ? 6 : (isSmallScreen ? 8 : 12),
+                            ),
                           ),
                           onPressed: () async {
                             final result = await Navigator.push(
@@ -306,15 +399,25 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                           },
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: isVerySmallScreen ? 4 : (isSmallScreen ? 6 : 8)),
                       Expanded(
                         child: ElevatedButton.icon(
-                          icon: const Icon(Icons.shopping_cart, size: 18),
-                          label: const Text("Add Existing"),
+                          icon: Icon(
+                            Icons.shopping_cart,
+                            size: isVerySmallScreen ? 14 : (isSmallScreen ? 16 : 18)
+                          ),
+                          label: Text(
+                            "Add Existing Product",
+                            style: TextStyle(
+                              fontSize: isVerySmallScreen ? 11 : (isSmallScreen ? 12 : 14),
+                            ),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).colorScheme.primary,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            padding: EdgeInsets.symmetric(
+                              vertical: isVerySmallScreen ? 6 : (isSmallScreen ? 8 : 12),
+                            ),
                           ),
                           onPressed: () async {
                             final result = await Navigator.push(
@@ -329,9 +432,8 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
-
-                  // Products Grid
+                  SizedBox(height: isVerySmallScreen ? 8 : (isSmallScreen ? 12 : 16)),
+                  
                   FutureBuilder<List<ProductSellerEntry>>(
                     future: _products,
                     builder: (context, snapshot) {
@@ -341,17 +443,18 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return Center(
                           child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Image.asset(
                                 'assets/no-item-found.png',
-                                height: 150,
+                                height: isVerySmallScreen ? 100 : (isSmallScreen ? 120 : 150),
                               ),
                               const SizedBox(height: 16),
-                              const Text(
+                              Text(
                                 "You don't have any products in this category yet.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: isVerySmallScreen ? 12 : (isSmallScreen ? 14 : 16),
                                   color: Colors.grey,
                                 ),
                               ),
@@ -362,23 +465,23 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
 
                       return LayoutBuilder(
                         builder: (context, constraints) {
-                          // Hitung jumlah kolom berdasarkan lebar layar
                           double width = constraints.maxWidth;
                           int crossAxisCount;
-                          double aspectRatio;
-
-                          if (width > 1100) {
-                            crossAxisCount = 4;  // 4 kolom untuk layar sangat lebar
-                            aspectRatio = 0.75;
-                          } else if (width > 800) {
-                            crossAxisCount = 3;  // 3 kolom untuk layar medium
-                            aspectRatio = 0.75;
-                          } else if (width > 600) {
-                            crossAxisCount = 3;  // 3 kolom untuk tablet
-                            aspectRatio = 0.8;
+                          const double aspectRatio = 0.65;
+                          
+                          double desiredItemWidth = 160.0;
+                          double availableWidth = width - (16 * 2);
+                          int calculatedColumns = (availableWidth ~/ desiredItemWidth);
+                          
+                          if (width < 320) {
+                            crossAxisCount = 2;
                           } else {
-                            crossAxisCount = 2;  // 2 kolom untuk mobile
-                            aspectRatio = 0.85;
+                            crossAxisCount = calculatedColumns.clamp(2, 6);
+                          }
+
+                          double spacing = 8.0;
+                          if (width < 320) {
+                            spacing = 4.0;
                           }
 
                           return GridView.builder(
@@ -387,13 +490,13 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: crossAxisCount,
                               childAspectRatio: aspectRatio,
-                              crossAxisSpacing: width > 600 ? 16 : 8,
-                              mainAxisSpacing: width > 600 ? 16 : 8,
+                              crossAxisSpacing: spacing,
+                              mainAxisSpacing: spacing,
                             ),
                             padding: EdgeInsets.only(
-                              bottom: 60,
-                              left: width > 600 ? 8 : 0,
-                              right: width > 600 ? 8 : 0,
+                              bottom: isSmallScreen ? 80 : 100,
+                              left: spacing,
+                              right: spacing,
                             ),
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
@@ -422,18 +525,17 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
             ),
           ),
 
-          // Products Counter
           Positioned(
-            bottom: 16,
-            right: 16,
+            bottom: isVerySmallScreen ? 10 : (isSmallScreen ? 15 : 25),
+            right: isVerySmallScreen ? 6 : (isSmallScreen ? 8 : 16),
             child: FutureBuilder<List<ProductSellerEntry>>(
               future: _products,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) return const SizedBox.shrink();
                 return Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isVerySmallScreen ? 6 : (isSmallScreen ? 8 : 12),
+                    vertical: isVerySmallScreen ? 3 : (isSmallScreen ? 4 : 6),
                   ),
                   decoration: BoxDecoration(
                     color: Colors.red,
@@ -448,10 +550,10 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                   ),
                   child: Text(
                     'Total Products : ${snapshot.data!.length}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 12,
+                      fontSize: isVerySmallScreen ? 10 : (isSmallScreen ? 11 : 12),
                     ),
                   ),
                 );

@@ -98,7 +98,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 content: Text('Price updated successfully!'),
                               ),
                             );
-                            Navigator.pop(context, true);
+
+                            // Kembali ke layar sebelumnya dengan status sukses
+                            Navigator.of(context).pop(true);
                           }
                         } else {
                           if (context.mounted) {

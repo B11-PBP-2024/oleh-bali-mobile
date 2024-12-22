@@ -70,14 +70,14 @@ class BaseSeller extends StatelessWidget {
           }
           Widget nextPage;
           if (index == 0) {
-            nextPage = SellerHomepage(); // Pastikan kelas ini ada
+            nextPage = SellerHomepage(); 
           } else if (index == 1) {
-            nextPage = const ShowProductsPage(); // Pastikan kelas ini ada
+            nextPage = const ShowProductsPage(); 
           } else if (index == 2) {
             nextPage = const ProfileDetail();
           } else if (index == 3) {
             final response =
-                await request.logout("http://localhost:8000/auth/logout/"); // Tambahkan trailing slash
+                await request.logout("http://localhost:8000/auth/logout/"); 
             String message = response["message"];
             if (context.mounted) {
               if (response['status']) {
