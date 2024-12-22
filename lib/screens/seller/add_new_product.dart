@@ -195,6 +195,7 @@ class _AddProductFormState extends State<AddProductForm> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Product added successfully!'),
+                                backgroundColor: Colors.green,
                               ),
                             );
                             Navigator.pop(context, true);
@@ -204,6 +205,7 @@ class _AddProductFormState extends State<AddProductForm> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(response['message']),
+                                backgroundColor: Colors.red,
                               ),
                             );
                           }
