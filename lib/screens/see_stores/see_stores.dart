@@ -37,7 +37,6 @@ class _SeeStoresPageState extends State<SeeStores> {
 
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
     return FutureBuilder<void>(
       future: _fetchStoresProductFuture,
       builder: (context, snapshot) {

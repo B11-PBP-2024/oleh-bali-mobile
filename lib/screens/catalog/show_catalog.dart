@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/base_buyer.dart';
@@ -21,7 +21,6 @@ class _ShowCatalogState extends State<ShowCatalog> {
   List<String> filters = [];
   String selectedFilter = 'All Categories';
   String searchValue = 'NoSearch';
-  final TextEditingController _searchController = TextEditingController();
   
   @override
   void initState() {
@@ -87,9 +86,6 @@ class _ShowCatalogState extends State<ShowCatalog> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final aspectRatio = screenWidth / (screenHeight / 2);
     return BaseBuyer(
       appBar: AppBar(
         title: const Text("Catalog"),

@@ -166,7 +166,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               const SizedBox(height: 10),
               Text(
-                widget.product.fields.price!,
+                widget.product.fields.price,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
