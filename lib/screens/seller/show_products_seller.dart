@@ -138,7 +138,7 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                   style: TextStyle(color: Colors.blue),
                 ),
               ),
-              const SizedBox(width: 8), // Jarak antara tombol
+              const SizedBox(width: 8),
               TextButton(
                 onPressed: () async {
                   final request = context.read<CookieRequest>();
@@ -151,11 +151,17 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                   if (response['status'] == true) {
                     refreshProducts();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Product successfully deleted!')),
+                      const SnackBar(
+                        content: Text('Product successfully deleted!'),
+                        backgroundColor: Colors.green,  // Pindahkan ke dalam SnackBar
+                      ),
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Failed to delete product')),
+                      const SnackBar(
+                        content: Text('Failed to delete product'),
+                        backgroundColor: Colors.red,  // Pindahkan ke dalam SnackBar
+                      ),
                     );
                   }
                 },
@@ -500,21 +506,13 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                             ),
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
-                              final product = snapshot.data![index];
-                              return ProductCard(
-                                product: product,
-                                onEdit: () async {
-                                  final result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EditProductScreen(product: product),
-                                    ),
-                                  );
-                                  if (result == true) refreshProducts();
-                                },
-                                onDelete: () => showDeleteDialog(context, product),
-                              );
-                            },
+                            final product = snapshot.data![index];
+                            return ProductCard(
+                              product: product,
+                              onEdit: refreshProducts,  // Langsung passing refreshProducts sebagai callback
+                              onDelete: () => showDeleteDialog(context, product),
+                            );
+                          },
                           );
                         },
                       );

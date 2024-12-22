@@ -96,6 +96,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Price updated successfully!'),
+                                backgroundColor: Colors.green,
                               ),
                             );
 
@@ -107,6 +108,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(response['message'] ?? 'Failed to update price'),
+                                backgroundColor: Colors.red,
                               ),
                             );
                           }

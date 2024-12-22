@@ -63,165 +63,121 @@ class _ProductCardState extends State<ProductCard> with SingleTickerProviderStat
 
   Future<void> handlePriceChange(BuildContext context) async {
     final request = context.read<CookieRequest>();
-    final formKey = GlobalKey<FormState>();
-    String price = widget.product.price.toString();
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isSmallScreen = screenWidth < 360;
-    final isVerySmallScreen = screenWidth < 320;
+    final TextEditingController priceController = TextEditingController(
+      text: widget.product.price.toString(),
+    );
 
     if (!context.mounted) return;
 
     showDialog(
       context: context,
-      barrierDismissible: false,
       builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: Center(
-            child: Text(
-              'Edit Price',
-              style: TextStyle(
-                fontSize: isVerySmallScreen ? 16 : (isSmallScreen ? 18 : 20),
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
-              ),
-            ),
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
           ),
-          content: Form(
-            key: formKey,
+          child: Container(
+            padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.product.name,
+                const Text(
+                  'Edit Price',
                   style: TextStyle(
-                    fontSize: isVerySmallScreen ? 14 : 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: Colors.red,
                   ),
                 ),
-                const SizedBox(height: 12),
-                TextFormField(
-                  initialValue: price,
-                  decoration: InputDecoration(
+                const SizedBox(height: 16),
+                Text(
+                  widget.product.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: priceController,
+                  decoration: const InputDecoration(
                     labelText: 'Price',
-                    labelStyle: TextStyle(
-                      fontSize: isVerySmallScreen ? 12 : (isSmallScreen ? 13 : 14),
-                      color: Colors.grey[600],
-                    ),
                     prefixText: 'Rp ',
-                    prefixStyle: TextStyle(
-                      fontSize: isVerySmallScreen ? 12 : (isSmallScreen ? 13 : 14),
-                      color: Colors.grey[600],
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Colors.red),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Colors.red),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Colors.red, width: 2),
-                    ),
+                    border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: isVerySmallScreen ? 8 : 12,
-                      vertical: isVerySmallScreen ? 12 : 16,
+                      horizontal: 12,
+                      vertical: 16,
                     ),
                   ),
-                  style: TextStyle(
-                    fontSize: isVerySmallScreen ? 12 : (isSmallScreen ? 13 : 14),
-                    color: Colors.grey[800],
-                  ),
-                  cursorColor: Colors.red,
                   keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Price cannot be empty';
-                    }
-                    if (double.tryParse(value) == null) {
-                      return 'Please enter a valid number';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    price = value;
-                  },
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialogContext),
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        try {
+                          final response = await request.post(
+                            'http://localhost:8000/products/seller/edit/${widget.product.id}/json/',
+                            {
+                              'price': priceController.text,
+                            },
+                          );
+
+                          if (dialogContext.mounted) {
+                            Navigator.pop(dialogContext);
+                            
+                            if (response['status'] == true) {
+                              widget.onEdit(); // Refresh the product list
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Price updated successfully!'),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Failed to update price'),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
+                            }
+                          }
+                        } catch (e) {
+                          Navigator.pop(dialogContext);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error: ${e.toString()}'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  fontSize: isVerySmallScreen ? 12 : (isSmallScreen ? 13 : 14),
-                  color: Colors.red,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () async {
-                if (formKey.currentState!.validate()) {
-                  try {
-                    final response = await request.post(
-                      'http://localhost:8000/products/seller/edit/${widget.product.id}/json/',
-                      {
-                        'price': price,
-                      },
-                    );
-
-                    if (dialogContext.mounted) {
-                      Navigator.pop(dialogContext); // Close the dialog first
-                      
-                      if (response['status'] == true) {
-                        widget.onEdit(); // Refresh the product list
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Price updated successfully!'),
-                              backgroundColor: Colors.green,
-                            ),
-                          );
-                        }
-                      } else {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Failed to update price'),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
-                      }
-                    }
-                  } catch (e) {
-                    Navigator.pop(dialogContext); // Close dialog on error
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Error: ${e.toString()}'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  }
-                }
-              },
-              child: Text(
-                'Save',
-                style: TextStyle(
-                  fontSize: isVerySmallScreen ? 12 : (isSmallScreen ? 13 : 14),
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-          ],
         );
       },
     );
