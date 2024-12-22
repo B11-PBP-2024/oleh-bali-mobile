@@ -22,7 +22,7 @@ class _SeeReviewPageState extends State<SeeReview> {
   final TextEditingController _editReviewController = TextEditingController();
 
   Future<void> _fetchReviews(CookieRequest request) async {
-    final response = await request.get("http://localhost:8000/review/json/${widget.productId}");
+    final response = await request.get("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/review/json/${widget.productId}");
     List rawData = response;
     List<ReviewEntry> fetchedReviews = [];
     for (var d in rawData) {
@@ -37,7 +37,7 @@ class _SeeReviewPageState extends State<SeeReview> {
 
   Future<void> _createReview(CookieRequest request, String reviewText) async {
     final response = await request.postJson(
-      "http://localhost:8000/review/create/${widget.productId}",
+      "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/review/create/${widget.productId}",
       jsonEncode(<String, String>{
         'review_text': reviewText,
       }),
@@ -50,7 +50,7 @@ class _SeeReviewPageState extends State<SeeReview> {
 
   Future<void> _editReview(CookieRequest request, String reviewText, String reviewId) async {
     final response = await request.postJson(
-      "http://localhost:8000/review/edit-review/mobile/${reviewId}",
+      "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/review/edit-review/mobile/${reviewId}",
       jsonEncode(<String, String>{
         'review_text': reviewText,
       }),
@@ -290,7 +290,7 @@ class _SeeReviewPageState extends State<SeeReview> {
                                         InkWell(
                                           onTap: () async {
                                           final response = await request.get(
-                                              "http://localhost:8000/review/delete/mobile/${review.id}",
+                                              "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/review/delete/mobile/${review.id}",
                                             );
 
                                             if (response['success']) {

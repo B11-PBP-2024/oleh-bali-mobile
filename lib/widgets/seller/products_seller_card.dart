@@ -126,7 +126,7 @@ class _ProductCardState extends State<ProductCard> with SingleTickerProviderStat
                       onPressed: () async {
                         try {
                           final response = await request.post(
-                            'http://localhost:8000/products/seller/edit/${widget.product.id}/json/',
+                            'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/edit/${widget.product.id}/json/',
                             {
                               'price': priceController.text,
                             },

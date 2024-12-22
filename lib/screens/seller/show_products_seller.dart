@@ -143,7 +143,7 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
                 onPressed: () async {
                   final request = context.read<CookieRequest>();
                   final response = await request.post(
-                    'http://localhost:8000/products/seller/delete/${product.id}/json/',
+                    'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/delete/${product.id}/json/',
                     {},
                   );
 
