@@ -31,7 +31,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
   }
 
   Future<void> fetchProducts(CookieRequest request) async {
-    final response = await request.get("http://localhost:8000/catalog/json");
+    final response = await request.get("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/catalog/json");
     var data = response;
     List<ProductEntry> fetchedProducts = [];
     for (var d in data) {
@@ -46,7 +46,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
   }
 
   Future<void> _getCategories(CookieRequest request) async {
-    final response = await request.get("http://localhost:8000/catalog/categories");
+    final response = await request.get("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/catalog/categories");
     var data = response;
     List<String> fetchedCategories = [];
     for (var d in data) {
@@ -70,7 +70,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
     if(searchValue == "") {
       searchValue = "NoSearch";
     }
-    final response = await request.get("http://localhost:8000/catalog/json/key:${searchValue}/cat:${selectedFilter}");
+    final response = await request.get("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/catalog/json/key:${searchValue}/cat:${selectedFilter}");
     List<ProductEntry> fetchedProducts = [];
     var data = response;
     for (var d in data) {
@@ -87,6 +87,9 @@ class _ShowCatalogState extends State<ShowCatalog> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final aspectRatio = screenWidth / (screenHeight / 2);
     return BaseBuyer(
       appBar: AppBar(
         title: const Text("Catalog"),
@@ -142,7 +145,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
                           ),
                           filled: true,
                           fillColor: Colors.white,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+                          
                         ),
                         onChanged: (String? newValue) {
                           setState(() {
@@ -154,7 +157,15 @@ class _ShowCatalogState extends State<ShowCatalog> {
                         items: filters.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(value),
+                            child: Text(
+                              value, 
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: value == selectedFilter ? 16 : 13,
+                                
+                              ),
+                              textScaler: MediaQuery.textScalerOf(context),
+                            ),
                           );
                         }).toList(),
                       ),

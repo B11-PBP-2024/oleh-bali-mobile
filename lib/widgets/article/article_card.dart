@@ -113,7 +113,7 @@ class ArticleCard extends StatelessWidget {
                   TextButton(
                     onPressed: () async {
                       final response = await request.get(
-                        "http://localhost:8000/article/delete/mobile/${article.id}/",
+                        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/article/delete/mobile/${article.id}/",
                       );
 
                       if (response['status'] == 'success') {

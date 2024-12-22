@@ -27,7 +27,7 @@ class _AddProductFormState extends State<AddProductForm> {
   Future<void> fetchCategories() async {
     final request = context.read<CookieRequest>();
     final response = await request.get(
-      'http://localhost:8000/products/get-categories/',
+      'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/get-categories/',
     );
     
     if (response is List) {
@@ -180,7 +180,7 @@ class _AddProductFormState extends State<AddProductForm> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final response = await request.post(
-                          'http://localhost:8000/products/create/json/',
+                          'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/create/json/',
                           {
                             'product_name': _nameController.text,
                             'product_description': _descriptionController.text,

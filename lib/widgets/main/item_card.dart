@@ -21,15 +21,8 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    return Material(
-      // Menentukan warna latar belakang dari tema aplikasi.
-      color: Theme.of(context).colorScheme.secondary,
-      // Membuat sudut kartu melengkung.
-      borderRadius: BorderRadius.circular(12),
-
-      child: InkWell(
-        // Aksi ketika kartu ditekan.
-        onTap: () async {
+    return InkWell(
+      onTap: () async {
           // Menampilkan pesan SnackBar saat kartu ditekan.
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -39,7 +32,7 @@ class ItemCard extends StatelessWidget {
           if (item.name == "Logout") {
             final response = await request.logout(
                 // Tambahkan trailing slash
-                "http://localhost:8000/auth/logout/");
+                "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/auth/logout");
 
             String message = response["message"];
             if (context.mounted) {
@@ -73,7 +66,7 @@ class ItemCard extends StatelessWidget {
           } else if (item.name == "My Products") {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const ShowProductsPage()), 
+              MaterialPageRoute(builder: (context) => const ShowProductsPage()), // Gunakan ShowProductsPage
             );
           } else if (item.name == "Profile") {
             Navigator.pushReplacement(
@@ -87,30 +80,33 @@ class ItemCard extends StatelessWidget {
             );
           }
         },
-        // Container untuk menyimpan Icon dan Text
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              // Menyusun ikon dan teks di tengah kartu.
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
+            padding: const EdgeInsets.all(10),
+            child: Center(
+              child: Icon(
+                item.icon,
+                color: Colors.white,
+                size: 30.0,
+              ),
             ),
           ),
-        ),
-      ),
+          Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style:  TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    ),
+                ),
+        ],
+      )
     );
+    
   }
 }

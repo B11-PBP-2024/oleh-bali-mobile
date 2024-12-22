@@ -33,7 +33,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Future<void> _handleWishlistButton(CookieRequest request) async {
     if (!isWishlist) {
       final response = await request.postJson(
-        "http://localhost:8000/wishlist/add/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/wishlist/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -51,7 +51,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       }
     } else {
       final response = await request.postJson(
-        "http://localhost:8000/wishlist/delete/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/wishlist/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -73,7 +73,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Future<void> _handleLikeButtonPress(CookieRequest request) async {
     if (!isLiked) {
       final response = await request.postJson(
-        "http://localhost:8000/like/add/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/like/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -94,7 +94,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       }
     } else {
       final response = await request.postJson(
-        "http://localhost:8000/like/delete/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/like/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -213,8 +213,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       await _handleWishlistButton(request);
                     },
                   ),
-                  SizedBox(
-                    width: 175, // Set the desired width
+                  Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red, // Red background
@@ -228,15 +227,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         Navigator.push(context,
                           MaterialPageRoute(builder: (context) => SeeStores(productId: widget.product.pk)));
                       },
-                      child: Center(
-                        child: Text('See ${widget.product.fields.productName} Stores',
+                      child: const Center(
+                        child: Text('See Stores',
                         textAlign: TextAlign.center,),
                       ),
                     ),
                   ),
                   const SizedBox(width: 10,),
-                  SizedBox(
-                    width: 175, // Set the desired width
+                  Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: Colors.red), // Red border
@@ -249,9 +247,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         Navigator.push(context,
                           MaterialPageRoute(builder: (context) => SeeReview(productId: widget.product.pk, productName: widget.product.fields.productName,)));
                       },
-                      child: Center(
+                      child: const Center(
                         child: Text(
-                          'See ${widget.product.fields.productName} Reviews',
+                          'See Reviews',
                           style: TextStyle(color: Colors.red),
                           textAlign: TextAlign.center, // Center-align the text
                         ),

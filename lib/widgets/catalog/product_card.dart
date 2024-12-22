@@ -33,7 +33,7 @@ class _ProductCardState extends State<ProductCard> {
   Future<void> _handleWishlistButton(CookieRequest request) async {
     if (!isWishlist) {
       final response = await request.postJson(
-        "http://localhost:8000/wishlist/add/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/wishlist/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -52,7 +52,7 @@ class _ProductCardState extends State<ProductCard> {
       }
     } else {
       final response = await request.postJson(
-        "http://localhost:8000/wishlist/delete/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/wishlist/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -75,7 +75,7 @@ class _ProductCardState extends State<ProductCard> {
   Future<void> _handleLikeButtonPress(CookieRequest request) async {
     if (!isLiked) {
       final response = await request.postJson(
-        "http://localhost:8000/like/add/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/like/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -97,7 +97,7 @@ class _ProductCardState extends State<ProductCard> {
       }
     } else {
       final response = await request.postJson(
-        "http://localhost:8000/like/delete/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/like/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -139,17 +139,17 @@ class _ProductCardState extends State<ProductCard> {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: FadeInImage.assetNetwork(
-                  placeholder: 'placeholder.jpg', 
+                  placeholder: 'assets/placeholder.jpg', 
                   image: widget.product.fields.productImage,
                   width: double.infinity,
-                  height: 150, // Adjust the height as needed
+                  height: MediaQuery.of(context).size.width * 0.3,
                   fit: BoxFit.cover,)
               ),
               const SizedBox(height: 10),
@@ -184,9 +184,11 @@ class _ProductCardState extends State<ProductCard> {
                 widget.product.fields.price,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 14,
                   color: Colors.green,
+                  overflow: TextOverflow.ellipsis
                 ),
+                textScaler: MediaQuery.textScalerOf(context),
               ),
               const SizedBox(height: 10),
               Row(

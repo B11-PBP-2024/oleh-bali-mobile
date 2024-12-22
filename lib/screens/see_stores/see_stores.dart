@@ -20,7 +20,7 @@ class _SeeStoresPageState extends State<SeeStores> {
 
   Future<void> _fetchStoresProduct(CookieRequest request) async {
     final response = await request.get(
-        "http://localhost:8000/see_stores/${widget.productId}/stores/json/");
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/see_stores/${widget.productId}/stores/json/");
     var data = response;
     StoresProduct fetchedStoresProduct = StoresProduct.fromJson(data);
     setState(() {
