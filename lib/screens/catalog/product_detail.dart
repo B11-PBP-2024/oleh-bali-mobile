@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/base_buyer.dart';
 import 'package:oleh_bali_mobile/models/product_entry.dart';
 import 'package:oleh_bali_mobile/screens/see_stores/see_stores.dart';
+import 'package:oleh_bali_mobile/screens/review/see_review.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -243,6 +244,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       onPressed: () {
                         // Handle "See Reviews" button press
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SeeReview(productId: widget.product.pk, productName: widget.product.fields.productName,)));
                       },
                       child: const Center(
                         child: Text(

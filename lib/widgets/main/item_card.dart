@@ -162,7 +162,7 @@ class ItemCard extends StatelessWidget {
           } else if (item.name == "My Products") {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const ShowProductsPage()), // Gunakan ShowProductsPage
+              MaterialPageRoute(builder: (context) => const ShowProductsPage()), 
             );
           } else if (item.name == "Profile") {
             Navigator.pushReplacement(
