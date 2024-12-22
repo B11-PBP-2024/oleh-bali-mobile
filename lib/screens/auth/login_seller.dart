@@ -160,7 +160,7 @@ class _LoginSellerState extends State<LoginSeller> {
                   const SizedBox(height: 36.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const LoginBuyer()),
