@@ -21,7 +21,96 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    return Material(
+    return InkWell(
+      onTap: () async {
+          // Menampilkan pesan SnackBar saat kartu ditekan.
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+                content: Text("Kamu telah menekan tombol ${item.name}!")));
+
+          if (item.name == "Logout") {
+            final response = await request.logout(
+                // Tambahkan trailing slash
+                "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/auth/logout");
+
+            String message = response["message"];
+            if (context.mounted) {
+              if (response['status']) {
+                String uname = response["username"];
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("$message Sampai jumpa, $uname."),
+                ));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginBuyer()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(message),
+                  ),
+                );
+              }
+            }
+          } else if (item.name == "Articles") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ShowArticle()),
+            );
+          } else if (item.name == "Catalog") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ShowCatalog()),
+            );
+          } else if (item.name == "My Products") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ShowProductsPage()), // Gunakan ShowProductsPage
+            );
+          } else if (item.name == "Profile") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileDetail()),
+            );
+          } else if (item.name == "See Stores") {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ShowStore()),
+            );
+          }
+        },
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
+            padding: const EdgeInsets.all(10),
+            child: Center(
+              child: Icon(
+                item.icon,
+                color: Colors.white,
+                size: 30.0,
+              ),
+            ),
+          ),
+          Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style:  TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    ),
+                ),
+        ],
+      )
+    );
+    
+    
+    
+    Material(
       // Menentukan warna latar belakang dari tema aplikasi.
       color: Theme.of(context).colorScheme.secondary,
       // Membuat sudut kartu melengkung.
@@ -39,7 +128,7 @@ class ItemCard extends StatelessWidget {
           if (item.name == "Logout") {
             final response = await request.logout(
                 // Tambahkan trailing slash
-                "http://localhost:8000/auth/logout/");
+                "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/auth/logout");
 
             String message = response["message"];
             if (context.mounted) {

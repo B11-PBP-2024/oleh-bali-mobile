@@ -85,7 +85,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final response = await request.post(
-                          'http://localhost:8000/products/seller/edit/${widget.product.id}/json/',
+                          'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/edit/${widget.product.id}/json/',
                           {
                             'price': _priceController.text,
                           },

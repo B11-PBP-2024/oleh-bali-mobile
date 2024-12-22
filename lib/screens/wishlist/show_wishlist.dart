@@ -25,7 +25,7 @@ class _WishlistPageState extends State<WishlistPage> {
   }
 
   Future<void> fetchWishlists(CookieRequest request) async {
-    final response = await request.get("http://localhost:8000/wishlist/json/");
+    final response = await request.get("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/wishlist/json/");
     var data = response;
     WishlistEntry fetchedWishlist = WishlistEntry.fromJson(data);
     setState(() {
@@ -73,7 +73,7 @@ class _WishlistPageState extends State<WishlistPage> {
                               wishlist: wishlist!.wishlists[index],
                               onDelete: () async {
                                 final response = await request.postJson(
-                                  "http://localhost:8000/wishlist/delete/",
+                                  "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/wishlist/delete/",
                                   jsonEncode(<String, String>{
                                     'product_id': wishlist!
                                         .wishlists[index].products.first.pk,

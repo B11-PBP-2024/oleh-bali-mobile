@@ -157,7 +157,15 @@ class _ShowCatalogState extends State<ShowCatalog> {
                         items: filters.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(value),
+                            child: Text(
+                              value, 
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: value == selectedFilter ? 16 : 13,
+                                
+                              ),
+                              textScaler: MediaQuery.textScalerOf(context),
+                            ),
                           );
                         }).toList(),
                       ),

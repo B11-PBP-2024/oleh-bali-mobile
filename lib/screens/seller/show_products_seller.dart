@@ -63,7 +63,7 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
 
   Future<List<ProductSellerEntry>> fetchProducts() async {
     final request = context.read<CookieRequest>();
-    var url = 'http://localhost:8000/products/seller/show-products/json/';
+    var url = 'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/show-products/json/';
 
     List<String> queryParams = [];
     if (selectedCategory != null && selectedCategory != "All Categories") {
@@ -85,7 +85,7 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
 
   Future<List<String>> fetchCategories() async {
     final request = context.read<CookieRequest>();
-    final response = await request.get('http://localhost:8000/products/get-categories/');
+    final response = await request.get('https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/get-categories/');
 
     List<String> fetchedCategories = ["All Categories"];
     if (response is List) {
@@ -128,7 +128,7 @@ class _ShowProductsPageState extends State<ShowProductsPage> {
               onPressed: () async {
                 final request = context.read<CookieRequest>();
                 final response = await request.post(
-                  'http://localhost:8000/products/seller/delete/${product.id}/json/',
+                  'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/delete/${product.id}/json/',
                   {},
                 );
 

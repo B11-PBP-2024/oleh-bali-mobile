@@ -32,7 +32,7 @@ class BuyerHomepage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
       ), 
       currentIndex: 0,
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         // Menyusun widget secara vertikal dalam sebuah kolom.
         child: Column(
@@ -47,16 +47,25 @@ class BuyerHomepage extends StatelessWidget {
             Center(
               child: Column(
                 // Menyusun teks dan grid item secara vertikal.
-
                 children: [
+                  ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            'https://media.licdn.com/dms/image/v2/D5612AQFy-SwVphJoUQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1677468617732?e=2147483647&v=beta&t=JxDYsDuLnHSUxBXZ1QWeWS0LT_dfcMhuimfZtQyC3IQ',
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.1,
+                          ),
+                        ),
                   // Menampilkan teks sambutan dengan gaya tebal dan ukuran 18.
                   const Padding(
                     padding: EdgeInsets.only(top: 16.0),
-                    child: Text(
-                      'Welcome to OlehBali',
+                    child: const Text(
+                      'OlehBali.',
                       style: TextStyle(
+                        fontSize: 32.0,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -64,9 +73,9 @@ class BuyerHomepage extends StatelessWidget {
                   // Grid untuk menampilkan ItemCard dalam bentuk grid 3 kolom.
                   GridView.count(
                     primary: true,
-                    padding: const EdgeInsets.all(20),
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                    padding: const EdgeInsets.all(30),
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
                     crossAxisCount: 3,
                     // Agar grid menyesuaikan tinggi kontennya.
                     shrinkWrap: true,
@@ -75,6 +84,45 @@ class BuyerHomepage extends StatelessWidget {
                     children: items.map((ItemHomepage item) {
                       return ItemCard(item);
                     }).toList(),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'About OlehBali',
+                                style: TextStyle(
+                                  fontSize: 36.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Container(
+                                width: 80.0,
+                                height: 4.0,
+                                color: Colors.red[700],
+                              ),
+                              const SizedBox(height: 16.0),
+                              const Text(
+                                'Your ultimate destination for Indonesian souvenirs! Dive into our catalog and find treasures that reflect the beauty of Indonesia\'s diverse cultures. Each item is handpicked from Denpasar artisans, crafted with passion and tradition.',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.black,
+                                  
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

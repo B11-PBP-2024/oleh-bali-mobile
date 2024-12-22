@@ -149,7 +149,7 @@ class _ProductCardState extends State<ProductCard> {
                   placeholder: 'assets/placeholder.jpg', 
                   image: widget.product.fields.productImage,
                   width: double.infinity,
-                  height: 150, // Adjust the height as needed
+                  height: MediaQuery.of(context).size.width * 0.3,
                   fit: BoxFit.cover,)
               ),
               const SizedBox(height: 10),
@@ -182,11 +182,13 @@ class _ProductCardState extends State<ProductCard> {
               const SizedBox(height: 5),
               Text(
                 widget.product.fields.price,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: widget.product.fields.price.length > 10? 14 : 16,
+                  fontSize: 14,
                   color: Colors.green,
+                  overflow: TextOverflow.ellipsis
                 ),
+                textScaler: MediaQuery.textScalerOf(context),
               ),
               const SizedBox(height: 10),
               Row(

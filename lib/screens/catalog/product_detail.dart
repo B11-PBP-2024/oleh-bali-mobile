@@ -212,8 +212,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       await _handleWishlistButton(request);
                     },
                   ),
-                  SizedBox(
-                    width: 175, // Set the desired width
+                  Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red, // Red background
@@ -227,15 +226,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         Navigator.push(context,
                           MaterialPageRoute(builder: (context) => SeeStores(productId: widget.product.pk)));
                       },
-                      child: Center(
-                        child: Text('See ${widget.product.fields.productName} Stores',
+                      child: const Center(
+                        child: Text('See Stores',
                         textAlign: TextAlign.center,),
                       ),
                     ),
                   ),
                   const SizedBox(width: 10,),
-                  SizedBox(
-                    width: 175, // Set the desired width
+                  Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: Colors.red), // Red border
@@ -246,9 +244,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       onPressed: () {
                         // Handle "See Reviews" button press
                       },
-                      child: Center(
+                      child: const Center(
                         child: Text(
-                          'See ${widget.product.fields.productName} Reviews',
+                          'See Reviews',
                           style: TextStyle(color: Colors.red),
                           textAlign: TextAlign.center, // Center-align the text
                         ),

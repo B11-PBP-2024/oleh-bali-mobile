@@ -82,7 +82,7 @@ class BaseBuyer extends StatelessWidget {
             nextPage = const ProfileDetail();
           } else if (index == 5) {
             final response =
-                await request.logout("http://localhost:8000/auth/logout/");
+                await request.logout("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/auth/logout");
             String message = response["message"];
             if (context.mounted) {
               if (response['status']) {
