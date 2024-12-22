@@ -108,9 +108,9 @@ class _AddExistingProductFormState extends State<AddExistingProductForm> {
                         }
                         return null;
                       },
-                      style: TextStyle(
-                        fontSize: isVerySmallScreen ? 12 : (isSmallScreen ? 13 : 14),
-                      ),
+                      // style: TextStyle(
+                      //   fontSize: isVerySmallScreen ? 12 : (isSmallScreen ? 13 : 14),
+                      // ),
                       icon: Icon(
                         Icons.arrow_drop_down,
                         size: isVerySmallScreen ? 20 : 24,

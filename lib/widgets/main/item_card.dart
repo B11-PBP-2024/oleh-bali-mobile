@@ -7,6 +7,7 @@ import 'package:oleh_bali_mobile/screens/seller/show_products_seller.dart'; // C
 import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/store/show_store.dart';
 import 'package:oleh_bali_mobile/screens/user_profile/profile_detail.dart';
+import 'package:oleh_bali_mobile/screens/wishlist/show_wishlist.dart';
 import 'package:oleh_bali_mobile/widgets/main/item_homepage.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -54,29 +55,34 @@ class ItemCard extends StatelessWidget {
               }
             }
           } else if (item.name == "Articles") {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ShowArticle()),
             );
           } else if (item.name == "Catalog") {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ShowCatalog()),
             );
           } else if (item.name == "My Products") {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ShowProductsPage()), // Gunakan ShowProductsPage
             );
           } else if (item.name == "Profile") {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ProfileDetail()),
             );
           } else if (item.name == "See Stores") {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ShowStore()),
+            );
+          } else if (item.name == "Wishlist") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const WishlistPage()),
             );
           }
         },
