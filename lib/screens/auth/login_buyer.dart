@@ -45,10 +45,23 @@ class _LoginBuyerState extends State<LoginBuyer> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: Text('Login', textScaler: MediaQuery.textScalerOf(context)),
       ),
-      body: Center(
-        child: SingleChildScrollView(
+      backgroundColor: const Color.fromARGB(255,185,28,27),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+          const Text(
+            'OlehBali.',
+            style: TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Card(
             elevation: 8,
@@ -60,12 +73,13 @@ class _LoginBuyerState extends State<LoginBuyer> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
+                  Text(
                     'Login Buyer',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),
+                    textScaler: MediaQuery.textScalerOf(context)
                   ),
                   const SizedBox(height: 30.0),
                   TextField(
@@ -164,14 +178,16 @@ class _LoginBuyerState extends State<LoginBuyer> {
                       );
                     },
                     child: RichText(
+                      textScaler: MediaQuery.textScalerOf(context),
                       text: const TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Want to sell your souvenirs? ',
+                            text: 'Selling souvenirs? ',
                             style: TextStyle(
                               color: Colors.blue,
                               fontSize: 16.0,
                             ),
+                            
                           ),
                           TextSpan(
                             text: 'Sign in as Seller',
@@ -180,6 +196,7 @@ class _LoginBuyerState extends State<LoginBuyer> {
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
+                            
                           ),
                         ],
                       ),
@@ -207,6 +224,8 @@ class _LoginBuyerState extends State<LoginBuyer> {
             ),
           ),
         ),
+          ],
+        )
       ),
     );
   }
