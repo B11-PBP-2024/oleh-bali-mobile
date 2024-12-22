@@ -25,7 +25,7 @@ class _EditArticleState extends State<EditArticle> {
     super.initState();
     _titleController.text = widget.article.title;
     _textController.text = widget.article.text;
-    _imageUrlController.text = widget.article.img ?? '';
+    _imageUrlController.text = widget.article.img;
   }
 
   Future<void> editArticle(CookieRequest request) async {

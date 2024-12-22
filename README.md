@@ -1,5 +1,10 @@
-# [Oleh Bali Mobile](https://google.com 'Oleh Bali Website') 📱🎁🌴
+# [Oleh Bali Mobile](https://install.appcenter.ms/orgs/b11-pbp-2024/apps/oleh-bali/distribution_groups/public/releases/4 'Oleh Bali Website') 📱🎁🌴
 ## Bringing Indonesia’s Best to Bali’s Beaches 🏖️
+
+#### Tautan APK : https://install.appcenter.ms/orgs/b11-pbp-2024/apps/oleh-bali/distribution_groups/public/releases/4
+
+#### Video Promosi: https://drive.google.com/file/d/1X3AekmJugUp27tbq4G-Hk4oNJ-bPTwSz/view?usp=drivesdk
+
 <details>
 <summary>👥 Anggota Kelompok B11</summary>
 

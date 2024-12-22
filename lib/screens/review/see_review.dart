@@ -228,7 +228,7 @@ class _SeeReviewPageState extends State<SeeReview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(40),
                               child: Image.network(
-                                review.user.profilepicture ?? "",
+                                review.user.profilepicture,
                                 width: 40,
                                 height: 40,
                                 fit: BoxFit.cover,
@@ -245,7 +245,7 @@ class _SeeReviewPageState extends State<SeeReview> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        review.user?.displayname ?? "Anonymous",
+                                        review.user.displayname,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.red,
@@ -253,7 +253,7 @@ class _SeeReviewPageState extends State<SeeReview> {
                                         ),
                                       ),
                                       Text(
-                                        review.time ?? "",
+                                        review.time,
                                         style: const TextStyle(
                                           fontSize: 12,
                                           color: Colors.grey,
@@ -263,11 +263,11 @@ class _SeeReviewPageState extends State<SeeReview> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    review.user?.nationality ?? "",
+                                    review.user.nationality,
                                     style: const TextStyle(fontSize: 13, color: Colors.grey),
                                   ),
                                   const SizedBox(height: 6),
-                                  Text(review.reviewText ?? ""),
+                                  Text(review.reviewText),
                                   // Conditionally show edit/delete for review owners
                                   if (review.user.displayname == review.thisUser)
                                     Row(

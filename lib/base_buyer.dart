@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oleh_bali_mobile/models/profile_seller_entry.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
 import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
@@ -8,9 +7,6 @@ import 'package:oleh_bali_mobile/screens/wishlist/show_wishlist.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:oleh_bali_mobile/screens/user_profile/profile_detail.dart';
-import 'package:oleh_bali_mobile/models/profile_buyer_entry.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class BaseBuyer extends StatelessWidget {
   final Widget child;
@@ -98,7 +94,17 @@ class BaseBuyer extends StatelessWidget {
                 );
               }
             }
-            nextPage = const LoginBuyer();
+            Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => LoginBuyer(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return child;
+                },
+              ),
+              (Route<dynamic> route) => false, // This condition removes all previous routes
+            );
+          return;
           } else {
             return;
           }

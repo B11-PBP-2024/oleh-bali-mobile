@@ -2,16 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/models/profile_buyer_entry.dart';
-import 'package:oleh_bali_mobile/screens/article/show_article.dart';
-import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
-import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
-import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
+import 'package:oleh_bali_mobile/screens/auth/login_seller.dart';
 import 'package:oleh_bali_mobile/screens/main/seller_homepage.dart';
-import 'package:oleh_bali_mobile/models/products_seller_entry.dart';
-import 'package:oleh_bali_mobile/screens/seller/add_existing_product.dart'; 
-import 'package:oleh_bali_mobile/screens/seller/edit_products_seller.dart'; 
 import 'package:oleh_bali_mobile/screens/seller/show_products_seller.dart'; 
-import 'package:oleh_bali_mobile/widgets/seller/products_seller_card.dart'; 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:oleh_bali_mobile/screens/user_profile/profile_detail.dart';
@@ -93,7 +86,17 @@ class BaseSeller extends StatelessWidget {
                 );
               }
             }
-            nextPage = const LoginBuyer();
+            Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => LoginSeller(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return child;
+                },
+              ),
+              (Route<dynamic> route) => false, // This condition removes all previous routes
+            );
+            return;
           } else {
             return;
           }
