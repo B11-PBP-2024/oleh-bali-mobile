@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/models/profile_buyer_entry.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
+import 'package:oleh_bali_mobile/screens/auth/login_seller.dart';
 import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/main/buyer_homepage.dart';
 import 'package:oleh_bali_mobile/screens/main/seller_homepage.dart';
@@ -93,7 +94,17 @@ class BaseSeller extends StatelessWidget {
                 );
               }
             }
-            nextPage = const LoginBuyer();
+            Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => LoginSeller(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return child;
+                },
+              ),
+              (Route<dynamic> route) => false, // This condition removes all previous routes
+            );
+            return;
           } else {
             return;
           }

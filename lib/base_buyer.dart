@@ -98,7 +98,17 @@ class BaseBuyer extends StatelessWidget {
                 );
               }
             }
-            nextPage = const LoginBuyer();
+            Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => LoginBuyer(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return child;
+                },
+              ),
+              (Route<dynamic> route) => false, // This condition removes all previous routes
+            );
+          return;
           } else {
             return;
           }

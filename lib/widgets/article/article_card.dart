@@ -41,6 +41,9 @@ class ArticleCard extends StatelessWidget {
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                      return SizedBox(height: 0,);
+                    },
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -92,6 +95,9 @@ class ArticleCard extends StatelessWidget {
                   article.img,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                      return SizedBox(height: 0,);
+                    },
                 ),
               ),
             const SizedBox(height: 10),
