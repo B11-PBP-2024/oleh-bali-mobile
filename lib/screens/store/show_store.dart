@@ -44,7 +44,7 @@ class _ShowStoreState extends State<ShowStore> {
 
   Future<void> fetchStores() async {
     final request = context.read<CookieRequest>();
-    final response = await request.get('http://localhost:8000/store/api/seller/');
+    final response = await request.get('https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/store/api/seller/');
 
     setState(() {
       _stores = List.from(response['sellers']);
@@ -54,7 +54,7 @@ class _ShowStoreState extends State<ShowStore> {
 
   Future<void> fetchDataDropdown() async {
     final request = context.read<CookieRequest>();
-    final response = await request.get('http://localhost:8000/profile/api/edit/choices/');
+    final response = await request.get('https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/profile/api/edit/choices/');
 
     setState(() {
       subdistricts = Map<String, String>.from(response['subdistricts']);

@@ -106,7 +106,7 @@ class _LoginSellerState extends State<LoginSeller> {
                       // Untuk menyambungkan Android emulator dengan Django pada localhost,
                       // gunakan URL http://10.0.2.2/
                       final response = await request
-                          .login("http://localhost:8000/auth/login/seller", {
+                          .login("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/auth/login/seller", {
                         'username': username,
                         'password': password,
                       });

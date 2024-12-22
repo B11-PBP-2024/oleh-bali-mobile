@@ -24,7 +24,7 @@ class _AddExistingProductFormState extends State<AddExistingProductForm> {
   Future<void> fetchProducts() async {
     final request = context.read<CookieRequest>();
     final response = await request.get(
-      'http://localhost:8000/products/seller/show-all-products/json/',
+      'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/show-all-products/json/',
     );
     setState(() {
       _products = response;
@@ -117,7 +117,7 @@ class _AddExistingProductFormState extends State<AddExistingProductForm> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final response = await request.post(
-                      'http://localhost:8000/products/seller/create/json/',
+                      'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/create/json/',
                       {
                         'product': _selectedProductId,
                         'price': _price,

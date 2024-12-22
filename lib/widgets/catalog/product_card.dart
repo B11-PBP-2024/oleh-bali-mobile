@@ -33,7 +33,7 @@ class _ProductCardState extends State<ProductCard> {
   Future<void> _handleWishlistButton(CookieRequest request) async {
     if (!isWishlist) {
       final response = await request.postJson(
-        "http://192.168.0.10:8000/wishlist/add/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/wishlist/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -52,7 +52,7 @@ class _ProductCardState extends State<ProductCard> {
       }
     } else {
       final response = await request.postJson(
-        "http://192.168.0.10:8000/wishlist/delete/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/wishlist/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -75,7 +75,7 @@ class _ProductCardState extends State<ProductCard> {
   Future<void> _handleLikeButtonPress(CookieRequest request) async {
     if (!isLiked) {
       final response = await request.postJson(
-        "http://192.168.0.10:8000/like/add/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/like/add/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),
@@ -97,7 +97,7 @@ class _ProductCardState extends State<ProductCard> {
       }
     } else {
       final response = await request.postJson(
-        "http://192.168.0.10:8000/like/delete/",
+        "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/like/delete/",
         jsonEncode(<String, String>{
           'product_id': widget.product.pk,
         }),

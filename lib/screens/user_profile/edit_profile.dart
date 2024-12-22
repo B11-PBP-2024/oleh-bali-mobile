@@ -80,7 +80,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<void> fetchDataDropdown() async {
     final request = context.read<CookieRequest>();
-    final response = await request.get('http://localhost:8000/profile/api/edit/choices/');
+    final response = await request.get('https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/profile/api/edit/choices/');
 
     setState(() {
       nationalities = Map<String, String>.from(response['nationalities']);
@@ -276,8 +276,8 @@ class _EditProfileState extends State<EditProfile> {
                             // Save profile changes
                             final response = await request.postJson(
                               widget.profile is ProfileBuyer
-                                  ? 'http://localhost:8000/profile/api/buyer/'
-                                  : 'http://localhost:8000/profile/api/seller/',
+                                  ? 'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/profile/api/buyer/'
+                                  : 'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/profile/api/seller/',
                               jsonEncode(
                                 {
                                   'profile_picture': _profilePictureController.text,

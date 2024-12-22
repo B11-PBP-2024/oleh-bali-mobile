@@ -30,7 +30,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
     try {
       // Try buyer endpoint
       try {
-        final buyerResponse = await request.get('http://localhost:8000/profile/api/buyer/');
+        final buyerResponse = await request.get('https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/profile/api/buyer/');
         if (buyerResponse['profile_type'] == 'buyer') {
           profile = ProfileBuyerEntry.fromJson(buyerResponse).profile;
           if (mounted) {
@@ -46,7 +46,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
 
       // Try seller endpoint
       try {
-        final sellerResponse = await request.get('http://localhost:8000/profile/api/seller/');
+        final sellerResponse = await request.get('https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/profile/api/seller/');
         if (sellerResponse['profile_type'] == 'seller') {
           profile = ProfileSellerEntry.fromJson(sellerResponse).profile;
         }

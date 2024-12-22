@@ -28,8 +28,8 @@ class _ShowArticleState extends State<ShowArticle> {
 
   Future<void> fetchArticles(CookieRequest request) async {
     final response = await request.get(showAllArticles
-        ? "http://localhost:8000/article/json-all/"
-        : "http://localhost:8000/article/json-user/");
+        ? "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/article/json-all/"
+        : "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/article/json-user/");
     var data = response;
     List<ArticleEntry> fetchedArticles = [];
     for (var d in data) {

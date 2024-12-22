@@ -34,7 +34,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   Future<List<dynamic>> fetchProducts() async {
     final request = context.read<CookieRequest>();
-    var url = 'http://localhost:8000/products/seller/show-products/json/';
+    var url = 'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/show-products/json/';
     
     // Buat list parameter query
     List<String> queryParams = [];
@@ -66,7 +66,7 @@ class _ProductsPageState extends State<ProductsPage> {
   Future<List<String>> fetchCategories() async {
     final request = context.read<CookieRequest>();
     final response = await request.get(
-      'http://localhost:8000/products/get-categories/',
+      'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/get-categories/',
     );
     
     List<String> fetchedCategories = ["All Categories"];
@@ -136,7 +136,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
                 final request = context.read<CookieRequest>();
                 final response = await request.post(
-                  'http://localhost:8000/products/seller/edit/${product['id']}/json/',
+                  'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/edit/${product['id']}/json/',
                   {
                     'price': priceController.text,
                   },
@@ -184,7 +184,7 @@ class _ProductsPageState extends State<ProductsPage> {
               onPressed: () async {
                 final request = context.read<CookieRequest>();
                 final response = await request.post(
-                  'http://localhost:8000/products/seller/delete/${product['id']}/json/',
+                  'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/products/seller/delete/${product['id']}/json/',
                   {},
                 );
 

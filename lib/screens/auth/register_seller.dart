@@ -124,7 +124,7 @@ class _RegisterSellerState extends State<RegisterSeller> {
                           // Untuk menyambungkan Android emulator dengan Django pada localhost,
                           // gunakan URL http://10.0.2.2/
                           final response = await request.postJson(
-                              "http://localhost:8000/auth/register/seller",
+                              "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/auth/register/seller",
                               jsonEncode({
                                 "username": username,
                                 "password1": password1,

@@ -126,7 +126,7 @@ class _ArticleEntryFormState extends State<ArticleEntryForm> {
                             // Kirim ke Django dan tunggu respons
                             
                             final response = await request.postJson(
-                                "http://localhost:8000/article/create/mobile",
+                                "https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/article/create/mobile",
                                 jsonEncode(<String, String>{
                                     'img': _img,
                                     'title': _title,

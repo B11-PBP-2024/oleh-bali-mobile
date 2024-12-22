@@ -30,7 +30,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
   }
 
   Future<void> fetchProducts(CookieRequest request) async {
-    final response = await request.get("http://192.168.0.10:8000/catalog/json");
+    final response = await request.get("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/catalog/json");
     var data = response;
     List<ProductEntry> fetchedProducts = [];
     for (var d in data) {
@@ -45,7 +45,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
   }
 
   Future<void> _getCategories(CookieRequest request) async {
-    final response = await request.get("http://192.168.0.10:8000/catalog/categories");
+    final response = await request.get("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/catalog/categories");
     var data = response;
     List<String> fetchedCategories = [];
     for (var d in data) {
@@ -69,7 +69,7 @@ class _ShowCatalogState extends State<ShowCatalog> {
     if(searchValue == "") {
       searchValue = "NoSearch";
     }
-    final response = await request.get("http://192.168.0.10:8000/catalog/json/key:${searchValue}/cat:${selectedFilter}");
+    final response = await request.get("https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/catalog/json/key:${searchValue}/cat:${selectedFilter}");
     List<ProductEntry> fetchedProducts = [];
     var data = response;
     for (var d in data) {
