@@ -1,7 +1,9 @@
+// lib/widgets/main/item_card.dart
+
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/screens/article/show_article.dart';
 import 'package:oleh_bali_mobile/screens/auth/login_buyer.dart';
-import 'package:oleh_bali_mobile/screens/seller/products_page.dart';
+import 'package:oleh_bali_mobile/screens/seller/show_products_seller.dart'; // Corrected import
 import 'package:oleh_bali_mobile/screens/catalog/show_catalog.dart';
 import 'package:oleh_bali_mobile/screens/store/show_store.dart';
 import 'package:oleh_bali_mobile/screens/user_profile/profile_detail.dart';
@@ -36,8 +38,8 @@ class ItemCard extends StatelessWidget {
 
           if (item.name == "Logout") {
             final response = await request.logout(
-                // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                "http://localhost:8000/auth/logout");
+                // Tambahkan trailing slash
+                "http://localhost:8000/auth/logout/");
 
             String message = response["message"];
             if (context.mounted) {
@@ -71,7 +73,7 @@ class ItemCard extends StatelessWidget {
           } else if (item.name == "My Products") {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const ProductsPage(),),
+              MaterialPageRoute(builder: (context) => const ShowProductsPage()), // Gunakan ShowProductsPage
             );
           } else if (item.name == "Profile") {
             Navigator.pushReplacement(

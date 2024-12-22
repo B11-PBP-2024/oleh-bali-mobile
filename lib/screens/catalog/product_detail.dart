@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:oleh_bali_mobile/base_buyer.dart';
 import 'package:oleh_bali_mobile/models/product_entry.dart';
+import 'package:oleh_bali_mobile/screens/see_stores/see_stores.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -223,6 +224,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       onPressed: () {
                         // Handle "See Stores" button press
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SeeStores(productId: widget.product.pk)));
                       },
                       child: Center(
                         child: Text('See ${widget.product.fields.productName} Stores',
