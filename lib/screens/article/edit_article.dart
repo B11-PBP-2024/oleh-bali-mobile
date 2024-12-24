@@ -30,7 +30,7 @@ class _EditArticleState extends State<EditArticle> {
 
   Future<void> editArticle(CookieRequest request) async {
     final response = await request.postJson(
-      'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/article/edit/mobile/${widget.article.id}/',
+      'https://ezar-akhdan-olehbali.pbp.cs.ui.ac.id/article/edit/mobile/${widget.article.id}',
       jsonEncode({
         'title': _titleController.text,
         'text': _textController.text,
